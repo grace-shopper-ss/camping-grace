@@ -23,7 +23,7 @@ const Product = db.define("product", {
   imageUrl: {
     type: STRING,
     allowNull: false,
-    defaultValue: "placeholder",
+    defaultValue: "https://images.cdn1.stockunlimited.net/illustration/teepee-tent_1558083.png",
   },
 });
 
