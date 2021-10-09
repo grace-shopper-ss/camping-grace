@@ -20,7 +20,7 @@ async function seed() {
   console.log(`seeded successfully`)
   return {
     users: {
-      cody: users[0],
+      bob: users[0],
       murphy: users[1]
     }
   }
