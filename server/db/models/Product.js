@@ -3,15 +3,10 @@ const Sequelize = require("sequelize");
 const db = require("../db");
 
 // destructure datatypes
-const { STRING, UUID, DECIMAL } = Sequelize.DataTypes;
+const { STRING, DECIMAL } = Sequelize.DataTypes;
 
 // Product model definition
 const Product = db.define("product", {
-  id: {
-    type: UUID,
-    unique: true,
-    allowNull: false,
-  },
   name: {
     type: STRING,
     allowNull: false,
