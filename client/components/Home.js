@@ -1,5 +1,6 @@
 import React from 'react'
-import {connect} from 'react-redux'
+import {connect} from 'react-redux';
+import Button from '@mui/material/Button';
 
 /**
  * COMPONENT
@@ -9,7 +10,10 @@ export const Home = props => {
 
   return (
     <div>
-      <h3>Welcome, {username}</h3>
+      <h1>Welcome, {username}</h1>
+      <h2>This is a test</h2>
+      <Button variant="contained">Hello World</Button>
+      <h2>This is the end of the test</h2>
     </div>
   )
 }
