@@ -15,8 +15,8 @@ const Order = db.define("order", {
   status: {
     type: ENUM('pending', 'complete'),
     allowNull: false,
-    defaultValue: 'pending'
-  }
+    defaultValue: 'pending',
+  },
 });
 
 module.exports = Order;
