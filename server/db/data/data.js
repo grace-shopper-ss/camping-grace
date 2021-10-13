@@ -15,12 +15,10 @@ const excelToJson = (sheet) => {
 
 // run function on each of the sheets and save data in vars to export to seed
 const products = excelToJson(Sheets.Products);
-const categories = excelToJson(Sheets.Categories);
 const inventory = excelToJson(Sheets.Inventory);
 
 // export data
 module.exports = {
   products,
-  categories,
   inventory,
 };

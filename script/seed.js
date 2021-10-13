@@ -27,6 +27,7 @@ async function seed() {
       Product.create({
         name: product.name,
         price: product.price,
+        category: product.category
       });
     })
   );
