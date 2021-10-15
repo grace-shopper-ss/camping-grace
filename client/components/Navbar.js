@@ -1,19 +1,19 @@
-import React from 'react'
-import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
-import {logout} from '../store'
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
+import React from "react";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+import { logout } from "../store";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import MenuIcon from "@mui/icons-material/Menu";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 
 // Placeholder for material UI navbar (in progress)
-const NavbarX = ({handleClick, isLoggedIn}) => (
+const NavbarX = ({ handleClick, isLoggedIn }) => (
   <div>
     <h1>Camping-Grace</h1>
     <nav>
@@ -35,9 +35,9 @@ const NavbarX = ({handleClick, isLoggedIn}) => (
     </nav>
     <hr />
   </div>
-)
+);
 
-const Navbar = ({isLoggedIn}) => {
+const Navbar = ({ isLoggedIn }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -60,8 +60,8 @@ const Navbar = ({isLoggedIn}) => {
               sx={{ mr: 2 }}
               aria-controls="basic-menu"
               aria-haspopup="true"
-              aria-expanded={ open ? 'true' : undefined }
-              onClick={ handleClick }
+              aria-expanded={open ? "true" : undefined}
+              onClick={handleClick}
             >
               <MenuIcon />
               {/* Start Menu */}
@@ -71,10 +71,12 @@ const Navbar = ({isLoggedIn}) => {
                 open={open}
                 onClose={handleClose}
                 MenuListProps={{
-                  'aria-labelledby': 'basic-button',
+                  "aria-labelledby": "basic-button",
                 }}
               >
-                <MenuItem onClick={handleClose}><Link to={`/products`}>All Products</Link></MenuItem>
+                <MenuItem onClick={handleClose}>
+                  <Link to={`/products`}>All Products</Link>
+                </MenuItem>
                 <MenuItem onClick={handleClose}>My account</MenuItem>
                 <MenuItem onClick={handleClose}>Logout</MenuItem>
               </Menu>
@@ -86,7 +88,7 @@ const Navbar = ({isLoggedIn}) => {
             <Button color="inherit">Login</Button>
           </Toolbar>
         </AppBar>
-      </Box>    
+      </Box>
       <h1>FS-App-Template</h1>
       <nav>
         {isLoggedIn ? (
@@ -102,28 +104,29 @@ const Navbar = ({isLoggedIn}) => {
             {/* The navbar will show these links before you log in */}
             <Link to="/login">Login</Link>
             <Link to="/signup">Sign Up</Link>
+            <Link to="/products">Products</Link>
           </div>
         )}
       </nav>
       <hr />
     </div>
-  )
-}
+  );
+};
 /**
  * CONTAINER
  */
-const mapState = state => {
+const mapState = (state) => {
   return {
-    isLoggedIn: !!state.auth.id
-  }
-}
+    isLoggedIn: !!state.auth.id,
+  };
+};
 
-const mapDispatch = dispatch => {
+const mapDispatch = (dispatch) => {
   return {
     handleClick() {
-      dispatch(logout())
-    }
-  }
-}
+      dispatch(logout());
+    },
+  };
+};
 
-export default connect(mapState, mapDispatch)(Navbar)
+export default connect(mapState, mapDispatch)(Navbar);
