@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import Button from '@mui/material/Button';
 
 const ProductDetail = (props) => {
   const { products } = props;
@@ -11,6 +12,7 @@ const ProductDetail = (props) => {
       <h1>Product Detail:</h1>
       <h2> {product.name} </h2>
       <p>Id: {product.id}</p>
+      <Button variant="contained">Add to Cart</Button>
     </div>
   );
 }
