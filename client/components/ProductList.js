@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
 const ProductList = (props) => {
   const products = props.products;
@@ -7,7 +8,12 @@ const ProductList = (props) => {
     <div id="productList">
       <ul>
         {products.map((product) => {
-          return <li key={product.id}>{product.name}</li>;
+          const linkToProduct = `/products/${product.id}`;
+          return (
+            <li key={product.id}>
+              <Link to={linkToProduct}>{product.name}</Link>
+            </li>
+          );
         })}
       </ul>
     </div>
