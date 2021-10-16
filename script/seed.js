@@ -2,10 +2,8 @@
 
 const {
   db,
-  models: { User, Product },
+  models: { User, Product, Inventory, products, inventories },
 } = require("../server/db");
-
-const { products } = require("../server/db/data/data");
 
 /**
  * seed - this function clears the database, updates tables to
@@ -27,7 +25,17 @@ async function seed() {
       Product.create({
         name: product.name,
         price: product.price,
-        category: product.category
+        category: product.category,
+      });
+    })
+  );
+
+  // Creating Inventory
+  await Promise.all(
+    inventories.map((inventory) => {
+      Inventory.create({
+        product: inventory.product,
+        status: inventory.status,
       });
     })
   );
