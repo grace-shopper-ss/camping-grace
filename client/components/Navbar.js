@@ -12,7 +12,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 
-const Navbar = ({ isLoggedIn }) => {
+const Navbar = ({ isLoggedIn, handleLogout }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -53,7 +53,7 @@ const Navbar = ({ isLoggedIn }) => {
                   <Link to={`/products`}>All Products</Link>
                 </MenuItem>
                 <MenuItem onClick={handleClose}>My account</MenuItem>
-                <MenuItem onClick={handleClose}>Logout</MenuItem>
+                <MenuItem onClick={handleLogout}>Logout</MenuItem>
               </Menu>
               {/* End Menu */}
             </IconButton>
@@ -70,7 +70,8 @@ const Navbar = ({ isLoggedIn }) => {
           <div>
             {/* The navbar will show these links after you log in */}
             <Link to="/home">Home</Link>
-            <a href="#" onClick={handleClick}>
+            <Link to="/products">Products</Link>
+            <a href="#" onClick={handleLogout}>
               Logout
             </a>
           </div>
@@ -98,7 +99,7 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    handleClick() {
+    handleLogout() {
       dispatch(logout());
     },
   };
