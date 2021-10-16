@@ -5,21 +5,16 @@ const db = require("./db");
 const User = require("./models/User");
 const Product = require("./models/Product");
 const Inventory = require("./models/Inventory");
-
-const { products, inventories } = require("./data/data");
-
 //associations could go here!
 
-Product.belongsTo(Inventory)
-Inventory.hasMany(Product)
+Product.hasMany(Inventory, { foreignKey: "productId" });
+Inventory.belongsTo(Product, { foreignKey: "productId" });
 
 module.exports = {
   db,
   models: {
     User,
     Product,
-    Inventory
+    Inventory,
   },
-  products,
-  inventories
 };

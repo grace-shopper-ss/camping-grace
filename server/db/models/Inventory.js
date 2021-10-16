@@ -3,12 +3,12 @@ const Sequelize = require("sequelize");
 const db = require("../db");
 
 // destructure datatypes
-const { STRING, ENUM } = Sequelize.DataTypes;
+const { INTEGER, ENUM } = Sequelize.DataTypes;
 
 // Inventory model definition
 const Inventory = db.define("inventory", {
-  product: {
-    type: STRING,
+  productId: {
+    type: INTEGER,
     allowNull: false
   },
   status: {
