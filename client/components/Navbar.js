@@ -6,6 +6,7 @@ import theme from './Theme';
 import { ThemeProvider, Box, Toolbar, Typography, Button, IconButton, Menu, MenuItem, AppBar } from '@mui/material';
 import MenuIcon from "@mui/icons-material/Menu";
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import Badge from '@mui/material/Badge';
 
 const Navbar = ({ isLoggedIn, handleLogout }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -20,7 +21,7 @@ const Navbar = ({ isLoggedIn, handleLogout }) => {
     <ThemeProvider theme={theme}>  
       <div>
         <Box sx={{ flexGrow: 1 }}>
-          <AppBar position="static">
+          <AppBar position="static" id="nav" elevation={0}>
             <Toolbar>
               <IconButton
                 id="basic-button"
@@ -46,44 +47,37 @@ const Navbar = ({ isLoggedIn, handleLogout }) => {
                     "aria-labelledby": "basic-button",
                   }}
                 >
-                  <MenuItem onClick={handleClose}>
+                  <MenuItem className="menuText" onClick={handleClose}>
                     <Link to={`/products`}>All Products</Link>
                   </MenuItem>
-                  <MenuItem onClick={handleClose}>My account</MenuItem>
-                  <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                  <MenuItem className="menuText" onClick={handleClose}>My account</MenuItem>
+                  <MenuItem className="menuText" onClick={handleLogout}>Logout</MenuItem>
                 </Menu>
                 {/* End Menu */}
-              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                News
+              <Typography id="main-heading" variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                <Link to={'/'}>
+                  Grace-Camping
+                </Link>
               </Typography>
-              <Link to="/home" sx={{ flexGrow: 2 }}>
-                <ShoppingCartIcon />
+              <Link to="/" sx={{ flexGrow: 2 }}>
+                <IconButton size="large" aria-label="show 4 cart items" color="inherit">
+                  <Badge badgeContent={4} color="error">                    
+                    <ShoppingCartIcon />
+                  </Badge>
+                </IconButton>
               </Link>
-              <Button color="inherit">Login</Button>
+              
+              {isLoggedIn ? (
+                <Button onClick={handleLogout} color="inherit">Logout</Button>                
+              ) : (
+                <div>
+                  <Link to="/signup"><Button color="inherit">Sign Up</Button></Link>
+                  <Link to="/login"><Button color="inherit">Login</Button></Link>
+                </div>
+              )}
             </Toolbar>
           </AppBar>
-        </Box>
-        <h1>FS-App-Template</h1>
-        <nav>
-          {isLoggedIn ? (
-            <div>
-              {/* The navbar will show these links after you log in */}
-              <Link to="/home">Home</Link>
-              <Link to="/products">Products</Link>
-              <a href="#" onClick={handleLogout}>
-                Logout
-              </a>
-            </div>
-          ) : (
-            <div>
-              {/* The navbar will show these links before you log in */}
-              <Link to="/login">Login</Link>
-              <Link to="/signup">Sign Up</Link>
-              <Link to="/products">Products</Link>
-            </div>
-          )}
-        </nav>
-        <hr />
+        </Box>                
       </div>
     </ThemeProvider>
   );

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import {
   Container,
@@ -105,7 +105,16 @@ class ProductDetail extends React.Component {
 const mapStateToProps = (state) => {
   return {
     products: state.products,
+    heroText: state.hero,
   };
 };
 
-export default connect(mapStateToProps)(ProductDetail);
+const mapDispatch = (dispatch) => {
+  return {
+    loadHeroText(heroHeading){
+      dispatch(getHeroText(heroHeading))
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatch)(ProductDetail);
