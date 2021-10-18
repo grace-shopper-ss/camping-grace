@@ -20,5 +20,6 @@ module.exports = {
     User,
     Product,
     Inventory,
+    Order
   },
 };

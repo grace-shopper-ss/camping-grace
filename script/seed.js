@@ -20,9 +20,9 @@ async function seed() {
     User.create({ username: "cody", password: "123" }),
     User.create({ username: "murphy", password: "123" }),
   ]);
-
-  // Creating Orders
-  const orders = await Promise.all([
+  
+   // Creating Orders
+   await Promise.all([
     Order.create({ userId: 1, status: "pending" }),
     Order.create({ userId: 2, status: "pending" }),
   ]);
