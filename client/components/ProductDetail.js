@@ -80,13 +80,13 @@ class ProductDetail extends React.Component {
               </CardContent>
               <CardActions>
                 <Grid container spacing={2} justifyContent="center">
-                  <button className="counterButton" onClick={subtractCount}>
+                  <Button className="counterButton" onClick={subtractCount}>
                     -
-                  </button>
-                  <div id="count">{count}</div>
-                  <button className="counterButton" onClick={addCount}>
+                  </Button>
+                  <div className="counterButton">{count}</div>
+                  <Button className="counterButton" onClick={addCount}>
                     +
-                  </button>
+                  </Button>
                   <Grid item xs={12} lg={6}>
                     <Button fullWidth variant="contained" color="success">
                       Add to Cart
