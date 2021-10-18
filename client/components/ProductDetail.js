@@ -1,6 +1,18 @@
 import React from "react";
 import { connect } from "react-redux";
-import Button from "@mui/material/Button";
+import {
+  Container,
+  Button,
+  Grid,
+  Stack,
+  ThemeProvider,
+  Card,
+  CardActions,
+  CardContent,
+  CardMedia,
+  Typography,
+} from "@mui/material";
+import theme from "./Theme";
 import axios from "axios";
 
 class ProductDetail extends React.Component {
@@ -44,21 +56,48 @@ class ProductDetail extends React.Component {
     const { id } = this.props.match.params;
     const product = products.find((product) => product.id * 1 === id * 1) || {};
     return (
-      <div id="productDetail">
-        <h1>Product Detail:</h1>
-        <h2> {product.name} </h2>
-        <img src={product.imageUrl} />
-        <div className="counter">
-          <button className="counterButton" onClick={subtractCount}>
-            -
-          </button>
-          <div id="count">{count}</div>
-          <button className="counterButton" onClick={addCount}>
-            +
-          </button>
+      <ThemeProvider theme={theme}>
+        <div id="productDetail">
+          <Grid
+            item
+            xs={8}
+            md={4}
+            s={5}
+            key={product.id}
+            justifyContent="center"
+          >
+            <Card sx={{ maxWidth: 345 }}>
+              <CardMedia
+                component="img"
+                height="140"
+                image={product.imageUrl}
+                alt={product.name}
+              />
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="div">
+                  {product.name}
+                </Typography>
+              </CardContent>
+              <CardActions>
+                <Grid container spacing={2} justifyContent="center">
+                  <button className="counterButton" onClick={subtractCount}>
+                    -
+                  </button>
+                  <div id="count">{count}</div>
+                  <button className="counterButton" onClick={addCount}>
+                    +
+                  </button>
+                  <Grid item xs={12} lg={6}>
+                    <Button fullWidth variant="contained" color="success">
+                      Add to Cart
+                    </Button>
+                  </Grid>
+                </Grid>
+              </CardActions>
+            </Card>
+          </Grid>
         </div>
-        <Button variant="contained">Add to Cart</Button>
-      </div>
+      </ThemeProvider>
     );
   }
 }
