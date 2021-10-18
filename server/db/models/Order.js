@@ -3,19 +3,17 @@ const Sequelize = require("sequelize");
 const db = require("../db");
 
 // destructure datatypes
-const { UUID, ENUM } = Sequelize.DataTypes;
+const { INTEGER, ENUM } = Sequelize.DataTypes;
 
 // Order model definition
 const Order = db.define("order", {
-  id: {
-    type: UUID,
-    unique: true,
-    allowNull: false,
+  userId: {
+    type: INTEGER,
   },
   status: {
-    type: ENUM('pending', 'complete'),
+    type: ENUM("pending", "complete"),
     allowNull: false,
-    defaultValue: 'pending',
+    defaultValue: "pending",
   },
 });
 

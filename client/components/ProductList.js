@@ -45,7 +45,7 @@ const ProductList = (props) => {
                       className="cardImageContainer cardImage"
                       style={
                         {
-                          backgroundImage: `url(` + `${product.imageUrl}.jpeg` + `)`
+                          backgroundImage: `url(` + `${product.imageUrl}` + `)`
                         }
                       }                    
                     >

@@ -2,7 +2,7 @@
 
 const {
   db,
-  models: { User, Product, Inventory },
+  models: { User, Product, Inventory, Order },
 } = require("../server/db");
 
 const { products, inventories } = require("../server/db/data/data");
@@ -19,6 +19,12 @@ async function seed() {
   const users = await Promise.all([
     User.create({ username: "cody", password: "123" }),
     User.create({ username: "murphy", password: "123" }),
+  ]);
+  
+   // Creating Orders
+   await Promise.all([
+    Order.create({ userId: 1, status: "pending" }),
+    Order.create({ userId: 2, status: "pending" }),
   ]);
 
   // Creating Products
