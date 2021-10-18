@@ -29,7 +29,6 @@ class ProductDetail extends React.Component {
       throw "We don't have enough stock";
     }
     this.setState({ count: count + 1 });
-    console.log(this.state.count);
   };
   subtractCount = () => {
     let { count } = this.state;
@@ -40,7 +39,7 @@ class ProductDetail extends React.Component {
   };
   render() {
     const { addCount, subtractCount } = this;
-    const { availableProducts, count } = this.state;
+    const { count } = this.state;
     const { products } = this.props;
     const { id } = this.props.match.params;
     const product = products.find((product) => product.id * 1 === id * 1) || {};
