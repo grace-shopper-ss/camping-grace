@@ -3,13 +3,16 @@ const Sequelize = require("sequelize");
 const db = require("../db");
 
 // destructure datatype
-const { UUID } = Sequelize.DataTypes;
+const { INTEGER } = Sequelize.DataTypes;
 
 // OrderedProduct model definition
-const OrderedProduct = db.define("order", {
-  id: {
-    type: UUID,
-    unique: true,
-    allowNull: false,
-  }
-})
+const OrderedProduct = db.define("orderedproduct", {
+  orderId: {
+    type: INTEGER,
+  },
+  inventoryId: {
+    type: INTEGER,
+  },
+});
+
+module.exports = OrderedProduct;
