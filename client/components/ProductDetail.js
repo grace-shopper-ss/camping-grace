@@ -13,20 +13,20 @@ import { getHeroText } from "../store";
 const ProductDetail = (props) => {
   const { products, loadHeroText } = props;
   const { id } = props.match.params;
-  
-  const categories = products.reduce((allCategories, product) => {  
-    let idx = allCategories.findIndex(product.category);
-    console.log(idx)
-    if (idx === -1) allCategories.push(product.category)
-    return allCategories;
-  },[])
+
+  // const categories = products.reduce((allCategories, product) => {  
+  //   let idx = allCategories.findIndex(product.category);
+  //   console.log(idx)
+  //   if (idx === -1) allCategories.push(product.category)
+  //   return allCategories;
+  // },)
 
   const product = products.find((product) => product.id * 1 === id * 1) || {};
   const productImage = `${product.imageUrl}.jpeg`;
   const productName = `${product.category}` || 'All Products';
 
   console.log(productName);
-  console.log('categories:', categories)
+  // console.log('categories:', categories)
   
   useEffect( () => {
     loadHeroText(productName)
