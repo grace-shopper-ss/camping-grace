@@ -1,5 +1,7 @@
 body {
   font-family: sans-serif;
+  margin: 0;
+  background-color: #e4e4e4;
 }
 
 a {
@@ -23,4 +25,121 @@ nav a {
 form div {
   margin: 1em;
   display: inline-block;
+}
+
+.cardImage{
+  background-size: contain;
+  background-blend-mode: multiply;
+  background-color: #f3f2e8;  
+  min-height: 250px;
+  max-height: 250px;
+  min-width: 250px;
+  padding: 0;
+  transition: 150ms ease;
+  
+}
+
+#hero{
+  background-image: url("https://www.14ers.com/photos/mtantero/peakphotos/large/201205_Ant01.jpg");
+  background-position: wrap;
+  background-size: cover;
+  background-color: rgba(114, 114, 114, 0.596);
+  background-blend-mode: multiply;
+  min-height: 300px;
+  max-height: 1000px;
+  width: 100%;
+}
+#hero h1{
+  padding-top: 7em;
+  color:rgb(255, 254, 233);
+  text-align: center;
+  margin: 0;
+}
+
+.cardHeading{
+  font-weight: 800 !important;
+  text-align: center;
+  font-size: .9em !important;
+}
+
+.cardImageContainer{
+  padding: 0 !important;
+  min-height: 250px;
+  border-radius: 5px;
+}
+
+.paperContainer{
+  padding: 1em;
+}
+
+.pageHeader{
+  text-align: center;
+  padding-top: 1em;
+}
+
+/* img{
+  max-height: 150px;
+} */
+
+.transparent{
+  background: transparent;
+  color: #fffef7
+}
+
+#nav{
+  background-color: transparent;
+  transition: 75ms ease-in;
+  color: #f5f3e4;
+  padding: 1em 0 1em 0;
+}
+
+#nav:hover{
+  /* background-color: #173836; */
+  background-color: #fefff6;
+  color:rgb(49, 49, 48);
+  transition: 75ms ease-out;
+}
+
+#main-heading{
+  font-family: 'Vollkorn', serif;
+}
+
+.menuText{
+  font-family: 'Vollkorn', serif !important;
+  font-weight: 300;
+}
+
+.cardContainer:hover .cta{
+  background-color:rgb(254, 255, 247) !important;
+  color:rgb(49, 49, 48) !important;
+}
+
+.cardContainer:hover .cta-alt{  
+  color:rgb(250, 250, 231) !important;
+  text-decoration: underline;
+}
+
+.cardContainer:hover .cardImage{
+  background-color: #d4d3c8;  
+}
+
+.cta{
+  margin-top: 6em !important;
+}
+
+.priceText{
+  text-align: center;
+}
+
+.tag{
+  font-size: 1em !important;
+}
+
+#productDetail{
+  background-color:#e4e4e4;  
+}
+
+.productImage{    
+  width: 100%;
+  max-width: 750px;
 }
