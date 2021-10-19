@@ -18,8 +18,7 @@ Order.belongsTo(User, { foreignKey: "userId" });
 
 Order.hasMany(OrderedProduct, { foreignKey: "orderId" });
 OrderedProduct.belongsTo(Order, { foreignKey: "orderId" });
-Inventory.hasOne(OrderedProduct, { foreignKey: "inventoryId" });
-
+Inventory.hasOne(OrderedProduct, { foreignKey: ["inventoryId", "productId"] });
 
 module.exports = {
   db,

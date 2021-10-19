@@ -13,6 +13,9 @@ const OrderedProduct = db.define("orderedproduct", {
   inventoryId: {
     type: INTEGER,
   },
+  productId: {
+    type: INTEGER,
+  },
 });
 
 module.exports = OrderedProduct;

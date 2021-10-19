@@ -6,17 +6,23 @@ import Home from "./components/Home";
 import Cart from "./components/Cart";
 import ProductList from "./components/ProductList";
 import ProductDetail from "./components/ProductDetail";
-import { me, getProducts } from "./store";
+import { me, getProducts, getCart } from "./store";
 
 /**
  * COMPONENT
  */
 class Routes extends Component {
   componentDidMount() {
-    this.props.loadInitialData();
-    this.props.getProducts();
+    const { loadInitialData, getCart, getProducts, auth } = this.props;
+    loadInitialData();
+    getProducts();
+    getCart(auth.id);
   }
-
+  componentDidUpdate(prevProps) {
+    if (this.props.auth.id !== prevProps.auth.id) {
+      this.props.getCart(this.props.auth.id);
+    }
+  }
   render() {
     const { isLoggedIn } = this.props;
 
@@ -61,6 +67,7 @@ const mapDispatch = (dispatch) => {
       dispatch(me());
     },
     getProducts: () => dispatch(getProducts()),
+    getCart: (id) => dispatch(getCart(id)),
   };
 };
 

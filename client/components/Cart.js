@@ -1,27 +1,17 @@
 import React from "react";
 import { connect } from "react-redux";
-import { getCart } from "../store";
 
 class Cart extends React.Component {
   constructor(props) {
     super(props);
   }
-  componentDidMount() {
-    const { getCart, match } = this.props;
-    getCart(match.params.id);
-  }
-  componentDidUpdate(prevProps) {
-    if (this.props.auth.id !== prevProps.auth.id) {
-      this.fetchData(this.props.auth);
-      this.props.getCart(this.props.match.params.id);
-    }
-  }
   render() {
     const { cart, products } = this.props;
+    const myCart = cart || []
     return (
       <div>
         <h1>Cart Items:</h1>
-        {cart.map((item) => (
+        {myCart.map((item) => (
           <p key={item.id}>
             {products.find((product) => item.productId === product.id).name}
           </p>
@@ -39,10 +29,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    getCart: (id) => dispatch(getCart(id)),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Cart);
+export default connect(mapStateToProps)(Cart);

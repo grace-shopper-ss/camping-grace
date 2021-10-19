@@ -1,7 +1,9 @@
+import { ErrorSharp } from "@mui/icons-material";
 import axios from "axios";
 
 const LOAD_CART = "LOAD_CART";
-const UPDATE_CART = "UPDATE_CART";
+const ADD_TO_CART = "ADD_TO_CART";
+// const UPDATE_CART = "UPDATE_CART";
 
 // actions
 export const loadCart = (cart) => {
@@ -11,12 +13,19 @@ export const loadCart = (cart) => {
   };
 };
 
-export const updateCart = (cart) => {
+export const addItem = (item) => {
   return {
-    type: UPDATE_CART,
-    cart,
+    type: ADD_TO_CART,
+    item,
   };
 };
+
+// export const updateCart = (item) => {
+//   return {
+//     type: UPDATE_CART,
+//     item,
+//   };
+// };
 
 // thunks
 export const getCart = (id) => {
@@ -40,13 +49,26 @@ export const getCart = (id) => {
   }
 };
 
-export const changeCart = (cart, auth, history) => {
+export const addToCart = (items, auth, history) => {
   return async (dispatch) => {
-    const { data: updated } = await axios.put(`/api/cart/${auth.id}`, cart);
-    dispatch(updateCart(updated));
-    history.push(`/cart/${auth.id}`);
+    await Promise.all(
+      items.map((item) => {
+        axios
+          .post(`/api/cart/${auth.id}`, item)
+          .then((res) => dispatch(addItem(res.data)));
+      })
+    );
+    history.push("/products");
   };
 };
+
+// export const changeCart = (item, auth, history) => {
+//   return async (dispatch) => {
+//     const { data: updated } = await axios.put(`/api/cart/${auth.id}/${item.id}`, item);
+//     dispatch(updateCart(updated));
+//     history.push(`/cart/${auth.id}`);
+//   };
+// };
 
 const initialState = [];
 
@@ -55,10 +77,12 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case LOAD_CART:
       return action.cart;
-    case UPDATE_CART:
-      return state.map((cart) =>
-        cart.id === action.cart.id ? action.cart : cart
-      );
+    case ADD_TO_CART:
+      return [...state, action.item];
+    // case UPDATE_CART:
+    //   return state.map((item) =>
+    //     item.id === action.item.id ? action.item : item
+    //   );
     default:
       return state;
   }
