@@ -9,7 +9,7 @@ router.get("/:id", async (req, res, next) => {
       await Order.findOne({
         where: { userId: req.params.id, status: "pending" },
         include: OrderedProduct,
-      })
+      }).then((res) => res.orderedproducts)
     );
   } catch (err) {
     next(err);
