@@ -161,3 +161,46 @@ form div {
 .counter {
   display: flex;
 }
+
+label.MuiInputLabel-root{
+  padding: 18px 15px 15px 24px;
+}
+
+#submitAuth{
+  /* width: 25%; */
+  margin: 1em;
+  background-color: #1C2541;
+  color: #fdfdf2;
+}
+
+#submitAuth:focus, #submitAuth:hover{
+  background-color: #076B50;
+}
+
+#authIcon{
+  color: #66676b;
+  transition: 250ms ease;
+  margin-right: -.2em;
+}
+#authIcon2{
+  color: #66676b;
+  transition: 400ms ease;
+  margin-left: -.2em;
+}
+
+#submitAuth:hover #authIcon{
+  color: #fdfdf2;
+  transform: translate(3px, 0);
+  transition: 150ms ease-out;
+}
+
+#submitAuth:hover #authIcon2{
+  color: #fdfdf2;
+  transform: translate(3px, 0);
+  transition: 250ms ease-out;
+}
+
+#iconGroup{
+  margin: 0;
+  padding-top: 6px;
+}
