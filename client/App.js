@@ -1,15 +1,15 @@
-import React from 'react'
+import React from "react";
 
-import Navbar from './components/Navbar'
-import Hero from './components/Hero'
-import Routes from './Routes'
+import Hero from "./components/Hero";
+import Routes from "./Routes";
 
 const App = () => {
   return (
     <div>
+      <Hero />
       <Routes />
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;

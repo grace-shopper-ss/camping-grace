@@ -20,14 +20,24 @@ export const updateCart = (cart) => {
 
 // thunks
 export const getCart = (id) => {
-  return async (dispatch) => {
-    try {
-      const { data: cart } = await axios.get(`/api/cart/${id}`);
-      dispatch(loadCart(cart));
-    } catch (err) {
-      console.log(err.message);
-    }
-  };
+  if (id) {
+    return async (dispatch) => {
+      try {
+        const { data: cart } = await axios.get(`/api/cart/${id}`);
+        dispatch(loadCart(cart));
+      } catch (err) {
+        console.log(err.message);
+      }
+    };
+  } else {
+    return async (dispatch) => {
+      try {
+        dispatch(loadCart([]));
+      } catch (err) {
+        console.log(err.message);
+      }
+    };
+  }
 };
 
 export const changeCart = (cart, auth, history) => {

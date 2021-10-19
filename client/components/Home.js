@@ -1,12 +1,12 @@
-import React from 'react'
-import {connect} from 'react-redux';
-import Button from '@mui/material/Button';
+import React from "react";
+import { connect } from "react-redux";
+import Button from "@mui/material/Button";
 
 /**
  * COMPONENT
  */
-export const Home = props => {
-  const {username} = props
+export const Home = (props) => {
+  const { username } = props;
 
   return (
     <div>
@@ -15,16 +15,16 @@ export const Home = props => {
       <Button variant="contained">Hello World</Button>
       <h2>This is the end of the test</h2>
     </div>
-  )
-}
+  );
+};
 
 /**
  * CONTAINER
  */
-const mapState = state => {
+const mapState = (state) => {
   return {
-    username: state.auth.username
-  }
-}
+    username: state.auth.username,
+  };
+};
 
-export default connect(mapState)(Home)
+export default connect(mapState)(Home);
