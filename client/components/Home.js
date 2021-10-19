@@ -6,7 +6,6 @@ import Hero from './Hero';
 import { Box, Paper } from '@mui/material';
 import { getHeroText } from "../store";
 
-
 /**
  * COMPONENT
  */
@@ -26,17 +25,18 @@ export const Home = props => {
       </Paper>
       
     </div>
-  )
-}
+  );
+};
 
 /**
  * CONTAINER
  */
-const mapState = state => {
+const mapState = (state) => {
   return {
-    username: state.auth.username
-  }
-}
+    username: state.auth.username,
+  };
+};
+
 
 const mapDispatch = dispatch => {
   return {

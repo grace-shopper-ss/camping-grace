@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 import theme from "./Theme";
 import axios from "axios";
+import { addToCart } from "../store";
 
 class ProductDetail extends React.Component {
   constructor(props) {
@@ -24,6 +25,7 @@ class ProductDetail extends React.Component {
     };
     this.addCount = this.addCount.bind(this);
     this.subtractCount = this.subtractCount.bind(this);
+    this.addItemToCart = this.addItemToCart.bind(this);
   }
   async componentDidMount() {
     const { id } = this.props.match.params;
@@ -49,8 +51,23 @@ class ProductDetail extends React.Component {
     }
     this.setState({ count: count - 1 });
   };
+  addItemToCart = () => {
+    const { auth, history, products, addToCart } = this.props;
+    const { availableProducts, count } = this.state;
+    const added = availableProducts.slice(0, count).map((product) => {
+      const cartItem = {};
+      // placeholder for current order (which will go on auth obj)
+      cartItem.orderId = auth.id;
+      cartItem.inventoryId = product.id;
+      const productObj = products.find((p) => product.productId === p.id);
+      cartItem.productId = productObj.id;
+      return cartItem;
+    });
+    console.log(added);
+    addToCart(added, auth, history);
+  };
   render() {
-    const { addCount, subtractCount } = this;
+    const { addCount, subtractCount, addItemToCart } = this;
     const { count } = this.state;
     const { products } = this.props;
     const { id } = this.props.match.params;
@@ -88,7 +105,12 @@ class ProductDetail extends React.Component {
                     +
                   </Button>
                   <Grid item xs={12} lg={6}>
-                    <Button fullWidth variant="contained" color="success">
+                    <Button
+                      fullWidth
+                      variant="contained"
+                      color="success"
+                      onClick={addItemToCart}
+                    >
                       Add to Cart
                     </Button>
                   </Grid>
@@ -106,15 +128,19 @@ const mapStateToProps = (state) => {
   return {
     products: state.products,
     heroText: state.hero,
+    cart: state.cart,
+    auth: state.auth,
   };
 };
 
 const mapDispatch = (dispatch) => {
   return {
-    loadHeroText(heroHeading){
-      dispatch(getHeroText(heroHeading))
-    }
-  }
-}
+    loadHeroText(heroHeading) {
+      dispatch(getHeroText(heroHeading));
+    },
+    addToCart: (cart, auth, history) =>
+      dispatch(addToCart(cart, auth, history)),
+  };
+};
 
 export default connect(mapStateToProps, mapDispatch)(ProductDetail);
