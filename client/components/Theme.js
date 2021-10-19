@@ -31,6 +31,9 @@ const theme = createTheme({
       // main: '#bf820f',
       main: '#CF5034',
     },
+    login: {
+      primary: '#1C2541',
+    }
   },
   typography: {
     fontWeightLight: 400,
@@ -80,6 +83,16 @@ const theme = createTheme({
               color: 'black',
               textDecoration: 'underline',
             }
+          }
+        },
+        {
+          props: { variant: 'auth-button' },
+          style: {
+            fontWeight: "bold",            
+            textTransform: 'none',              
+            margin: '1em',
+            color: '#1C2541 !important',
+            backgroundColor: '#1C2541 !important'
           }
         }
       ]
