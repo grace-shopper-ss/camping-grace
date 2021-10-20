@@ -3,10 +3,11 @@ const {
   models: { Order, OrderedProduct },
 } = require("../db");
 
-router.get("/:id", async (req, res, next) => {
+router.get("/:order", async (req, res, next) => {
   try {
+    console.log(req);
     const order = await Order.findOne({
-      where: { userId: req.params.id, status: "pending" },
+      where: { userId: req.params.order, status: "pending" },
     });
     const cart = await OrderedProduct.findAll({
       where: {
@@ -19,7 +20,7 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
-router.post("/:id", async (req, res, next) => {
+router.post("/:order", async (req, res, next) => {
   try {
     res.status(201).send(await OrderedProduct.create(req.body));
   } catch (error) {
