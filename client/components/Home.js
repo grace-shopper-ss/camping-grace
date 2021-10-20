@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import { connect } from 'react-redux';
 import { Link } from "react-router-dom";
 import Button from '@mui/material/Button';
-import Hero from './Hero';
 import { Box, Paper } from '@mui/material';
 import { getHeroText } from "../store";
 
@@ -15,8 +14,7 @@ export const Home = props => {
     loadHeroText(' ')
   },[]);
   return (
-    <div>
-      <Hero />
+    <div>      
       <Paper sx={{m: 2, p: 2}}>
         <h1>Welcome, {username}</h1>
         <Link to={`/products`}>
