@@ -91,7 +91,7 @@ const theme = createTheme({
             fontWeight: "bold",            
             textTransform: 'none',              
             margin: '1em',
-            color: '#1C2541 !important',
+            color: '#fdfdf2',
             backgroundColor: '#1C2541 !important'
           }
         }

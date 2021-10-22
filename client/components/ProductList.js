@@ -28,9 +28,9 @@ const ProductList = (props) => {
         <ThemeProvider theme={theme}>        
           <div id="productList">
             <Grid container spacing={2} justifyContent="center" alignItems="center">
+            
             {products.map((product) => {
               const linkToProduct = `/products/${product.id}`;       
-                
               return (
                 <Grid item xs={10} s={6} md={3} key={ product.id }>
                   <Card 

@@ -59,7 +59,7 @@ const Navbar = ({ isLoggedIn, handleLogout }) => {
                   Grace-Camping
                 </Link>
               </Typography>
-              <Link to="/" sx={{ flexGrow: 2 }}>
+              <Link to="/cart" sx={{ flexGrow: 2 }}>
                 <IconButton size="large" aria-label="show 4 cart items" color="inherit">
                   <Badge badgeContent={4} color="error">                    
                     <ShoppingCartIcon />
