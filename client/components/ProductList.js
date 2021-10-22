@@ -5,7 +5,6 @@ import { Paper, Button, Grid, ThemeProvider, Card, CardActions, CardContent, Typ
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import theme from './Theme';
-import Hero from './Hero';
 import { getHeroText } from "../store";
 
 
@@ -24,15 +23,14 @@ const ProductList = (props) => {
   },[]);
 
   return (
-    <div>
-      <Hero />  
+    <div>  
       <Paper className="paperContainer" elevation={24}>    
         <ThemeProvider theme={theme}>        
           <div id="productList">
             <Grid container spacing={2} justifyContent="center" alignItems="center">
+            
             {products.map((product) => {
               const linkToProduct = `/products/${product.id}`;       
-                
               return (
                 <Grid item xs={10} s={6} md={3} key={ product.id }>
                   <Card 

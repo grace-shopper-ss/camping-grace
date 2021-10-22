@@ -2,7 +2,9 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import {
   Container,
+  Paper,
   Button,
+  Box,
   Grid,
   Stack,
   ThemeProvider,
@@ -14,7 +16,7 @@ import {
 } from "@mui/material";
 import theme from "./Theme";
 import axios from "axios";
-import { addToCart } from "../store";
+import { getCart, addToCart, orderCartItems, getHeroText } from "../store";
 
 class ProductDetail extends React.Component {
   constructor(props) {
@@ -29,11 +31,19 @@ class ProductDetail extends React.Component {
   }
   async componentDidMount() {
     const { id } = this.props.match.params;
-    const { data: products } = await axios.get("/api/inventories");
-    const avail = products.filter(
-      (prod) => prod.productId * 1 === id * 1 && prod.status === "available"
+    const { data: inventory } = await axios.get("/api/inventories");
+    const avail = inventory.filter(
+      (prod) => prod.productId === id * 1 && prod.status === "available"
     );
     this.setState({ availableProducts: avail, count: 0 });
+  }
+  async componentDidUpdate(prevProps) {
+    const { id } = this.props.match.params;
+    if (this.props.products !== prevProps.products) {
+      const { loadHeroText, products } = this.props;
+      const product = products.find((p) => p.id * 1 === id * 1);
+      loadHeroText(product.category.toUpperCase());
+    }
   }
   addCount = () => {
     let { count } = this.state;
@@ -66,12 +76,16 @@ class ProductDetail extends React.Component {
     console.log(added);
     addToCart(added, auth, history);
   };
+  orderItem = () => {
+    const { auth, history, products, orderCartItems } = this.props;
+  }
   render() {
     const { addCount, subtractCount, addItemToCart } = this;
     const { count } = this.state;
     const { products } = this.props;
     const { id } = this.props.match.params;
     const product = products.find((product) => product.id * 1 === id * 1) || {};
+    console.log('image:', product.imageUrl);
     return (
       <ThemeProvider theme={theme}>
         <div id="productDetail">
@@ -84,12 +98,19 @@ class ProductDetail extends React.Component {
             justifyContent="center"
           >
             <Card sx={{ maxWidth: 345 }}>
-              <CardMedia
-                component="img"
-                height="140"
-                image={product.imageUrl}
-                alt={product.name}
-              />
+              <CardContent 
+                className="cardImageContainer cardImage"
+                style={
+                  // {
+                  //   backgroundImage: `url(` + `${product.imageUrl}` + `)`
+                  // }
+                  {
+                    backgroundImage: `url("https://www.patagonia.com/dw/image/v2/BDJB_PRD/on/demandware.static/-/Sites-patagonia-master/default/dwf6e7234e/images/hi-res/25371_KPF.jpg?sw=1200&sh=1200&sfrm=png&q=80&bgcolor=f6f6f6")`
+                  }
+                }                    
+              >
+                Hello World
+              </CardContent>
               <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
                   {product.name}
@@ -140,6 +161,8 @@ const mapDispatch = (dispatch) => {
     },
     addToCart: (cart, auth, history) =>
       dispatch(addToCart(cart, auth, history)),
+    orderCartItems: (cart, auth, history) => 
+      dispatch(orderCartItems(cart, auth, history)),
   };
 };
 

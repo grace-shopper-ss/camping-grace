@@ -8,11 +8,6 @@ import Grid from '@mui/material/Grid';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 
 import { getHeroText } from "../store";
-import Hero from './Hero';
-
-
-
-
 
 /**
  * COMPONENT
@@ -37,7 +32,6 @@ const AuthForm = props => {
 
   return (
     <div>
-      <Hero />
       <Paper>
         <Box
           component="form"
@@ -46,6 +40,8 @@ const AuthForm = props => {
           }}
           noValidate
           autoComplete="off"
+          onSubmit={handleSubmit}
+          name={name}
         >
           <Grid container direction='column' alignItems='center' justifyContent='center' sx={{m:'2', p:'2em 3em 2em 0'}}spacing={0}>
             <Grid item xs={10} md={4}>
@@ -53,12 +49,14 @@ const AuthForm = props => {
                 id="username-input"
                 label="Username"
                 value={username}
+                name='username'
                 onChange={handleChangeUsername}
                 fullWidth       
                 />
                 <TextField
                 id="password-input"
                 label="Password"
+                name='password'
                 value={password}
                 onChange={handleChangePassword}
                 type="password"
@@ -67,17 +65,19 @@ const AuthForm = props => {
                 <Button 
                 variant="auth-button"
                 id="submitAuth"
+                type="submit"
                 endIcon={<div id='iconGroup'><KeyboardArrowRightIcon id="authIcon"/> <KeyboardArrowRightIcon id="authIcon2"/></div>}
                 
                 fullWidth
               >
                 {displayName}
               </Button>
+              {error && error.response && <div> {error.response.data} </div>}
             </Grid>
           </Grid>
         </Box>
       </Paper>
-      <form onSubmit={handleSubmit} name={name}>
+      {/* <form onSubmit={handleSubmit} name={name}>
         <div>
           <label htmlFor="username">
             <small>Username</small>
@@ -94,7 +94,7 @@ const AuthForm = props => {
           <button type="submit">{displayName}</button>
         </div>
         {error && error.response && <div> {error.response.data} </div>}
-      </form>
+      </form> */}
     </div>
   )
 }

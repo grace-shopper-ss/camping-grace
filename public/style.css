@@ -204,3 +204,12 @@ label.MuiInputLabel-root{
   margin: 0;
   padding-top: 6px;
 }
+
+#cartContainer{
+  padding: 1em;
+  margin: 1em;
+}
+
+.cartItemLink{
+  text-decoration:underline;
+}

@@ -9,8 +9,6 @@ const Hero = (props) => {
   
   const heroHeading = useSelector((state) => state.hero) || "Default";
   
-  // const { id } = props.match.params || 'null';
-  // console.log(id)
 
   return (    
     <ThemeProvider theme={theme}>
