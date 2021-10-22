@@ -74,11 +74,9 @@ export default (state = initialState, action) => {
     case SET_CURRENT_ORDER:
       return action.order;
     case COMPLETE_CURRENT_ORDER:
-      return state.map((order) =>
-        order.id === action.order.id ? action.order : order
-      );
+      return action.order;
     case CREATE_NEW_ORDER:
-      return [...state, action.order];
+      return action.order;
     default:
       return state;
   }
