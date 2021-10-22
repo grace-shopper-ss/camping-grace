@@ -11,7 +11,7 @@ const OrderedProduct = db.define("orderedproduct", {
     type: INTEGER,
   },
   inventoryId: {
-    type: INTEGER,
+    type: INTEGER
   },
   productId: {
     type: INTEGER,
