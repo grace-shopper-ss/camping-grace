@@ -28,6 +28,19 @@ export const setOrder = (id) => {
         console.log(err.message);
       }
     };
+  } else {
+    return async (dispatch) => {
+      try {
+        const order = {
+          id: "guest",
+          userId: "guest",
+          status: "pending",
+        };
+        dispatch(setCurrentOrder(order));
+      } catch (err) {
+        console.log(err.message);
+      }
+    };
   }
 };
 

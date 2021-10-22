@@ -14,7 +14,11 @@ router.get("/", async (req, res, next) => {
 
 router.get("/:id", async (req, res, next) => {
   try {
-    res.send(await Order.findByPk(req.params.id));
+    res.send(
+      await Order.findOne({
+        where: { userId: req.params.id * 1, status: "pending" },
+      })
+    );
   } catch (err) {
     next(err);
   }
@@ -22,7 +26,11 @@ router.get("/:id", async (req, res, next) => {
 
 router.put("/:id", async (req, res, next) => {
   try {
-    res.send(await Order.findByPk(req.params.id));
+    res.send(
+      await Order.findOne({
+        where: { userId: req.params.id * 1, status: "pending" },
+      })
+    );
   } catch (err) {
     next(err);
   }

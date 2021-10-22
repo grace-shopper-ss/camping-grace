@@ -6,21 +6,23 @@ import Home from "./components/Home";
 import Cart from "./components/Cart";
 import ProductList from "./components/ProductList";
 import ProductDetail from "./components/ProductDetail";
-import { me, getProducts, getCart } from "./store";
+import { me, getProducts, getCart, setOrder } from "./store";
 
 /**
  * COMPONENT
  */
 class Routes extends Component {
   componentDidMount() {
-    const { loadInitialData, getCart, getProducts, auth } = this.props;
+    const { loadInitialData, getCart, getProducts, auth, setOrder } = this.props;
     loadInitialData();
     getProducts();
     getCart(auth.id);
+    setOrder(auth.id);
   }
   componentDidUpdate(prevProps) {
     if (this.props.auth.id !== prevProps.auth.id) {
       this.props.getCart(this.props.auth.id);
+      this.props.setOrder(this.props.auth.id);
     }
   }
   render() {
@@ -32,11 +34,11 @@ class Routes extends Component {
           <Switch>
             <Route exact path="/home" component={Home} />
             <Route exact path="/">
-            <Redirect to="/home" />
-            </Route>         
+              <Redirect to="/home" />
+            </Route>
             <Route exact path="/login">
-             { <Redirect to="/home" /> }
-            </Route>     
+              {<Redirect to="/home" />}
+            </Route>
             <Route exact path="/cart" component={Cart} />
             <Route exact path="/products" component={ProductList} />
             <Route path="/products/:id" component={ProductDetail} />
@@ -46,7 +48,7 @@ class Routes extends Component {
             <Route exact path="/home" component={Home} />
             <Route exact path="/">
               {<Redirect to="/home" />}
-            </Route>     
+            </Route>
             <Route exact path="/login" component={Login} />
             <Route exact path="/signup" component={Signup} />
             <Route exact path="/products" component={ProductList} />
@@ -77,6 +79,7 @@ const mapDispatch = (dispatch) => {
     },
     getProducts: () => dispatch(getProducts()),
     getCart: (id) => dispatch(getCart(id)),
+    setOrder: (id) => dispatch(setOrder(id)),
   };
 };
 
