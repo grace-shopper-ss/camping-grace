@@ -31,6 +31,9 @@ class Cart extends React.Component {
       total: total + cost,
     });
   }
+  componentDidMount() {
+    this.calcTotal();
+  }
   componentDidUpdate(prevProps) {
     if (this.props.cart.length !== prevProps.cart.length) this.calcTotal();
   }
