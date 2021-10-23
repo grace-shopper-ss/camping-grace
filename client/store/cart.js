@@ -102,7 +102,7 @@ export default (state = initialState, action) => {
     case ADD_TO_CART:
       return [...state, action.item];
     case ORDER_CART_ITEM:
-      return [...state, action.item];
+      return state;
     // case UPDATE_CART:
     //   return state.map((item) =>
     //     item.id === action.item.id ? action.item : item
