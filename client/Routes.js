@@ -13,19 +13,19 @@ import { me, getProducts, getCart, setOrder } from "./store";
  */
 class Routes extends Component {
   componentDidMount() {
-    const { loadInitialData, getCart, getProducts, auth, setOrder } =
+    const { loadInitialData, getProducts, auth, setOrder } =
       this.props;
     loadInitialData();
     getProducts();
-    getCart(auth.id);
     setOrder(auth.id);
   }
   componentDidUpdate(prevProps) {
-    if (this.props.auth.id !== prevProps.auth.id) {
-      this.props.setOrder(this.props.auth.id);
+    const { auth, order, setOrder, getCart } = this.props
+    if (auth.id !== prevProps.auth.id) {
+      setOrder(auth.id);
     }
-    if (this.props.order.id !== prevProps.order.id) {
-      this.props.getCart(this.props.auth.id);
+    if (order.id !== prevProps.order.id) {
+      getCart(order);
     }
   }
   render() {

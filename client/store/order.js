@@ -32,8 +32,8 @@ export const setOrder = (id) => {
     return async (dispatch) => {
       try {
         const order = {
-          id: "guest",
-          userId: "guest",
+          id: 0,
+          userId: 0,
           status: "pending",
         };
         dispatch(setCurrentOrder(order));

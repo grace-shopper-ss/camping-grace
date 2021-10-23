@@ -5,13 +5,9 @@ const {
 
 router.get("/:order", async (req, res, next) => {
   try {
-    console.log(req);
-    const order = await Order.findOne({
-      where: { userId: req.params.order, status: "pending" },
-    });
     const cart = await OrderedProduct.findAll({
       where: {
-        orderId: order.id,
+        orderId: req.params.order,
       },
     });
 

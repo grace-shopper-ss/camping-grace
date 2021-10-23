@@ -36,33 +36,23 @@ export const orderItem = (item) => {
 // };
 
 // thunks
-export const getCart = (id) => {
-  if (id) {
-    return async (dispatch) => {
-      try {
-        const { data: cart } = await axios.get(`/api/cart/${id}`);
-        dispatch(loadCart(cart));
-      } catch (err) {
-        console.log(err.message);
-      }
-    };
-  } else {
-    return async (dispatch) => {
-      try {
-        dispatch(loadCart([]));
-      } catch (err) {
-        console.log(err.message);
-      }
-    };
-  }
+export const getCart = (order) => {
+  return async (dispatch) => {
+    try {
+      const { data: cart } = await axios.get(`/api/cart/${order.id}`);
+      dispatch(loadCart(cart));
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
 };
 
-export const addToCart = (items, auth, history) => {
+export const addToCart = (items, order, history) => {
   return async (dispatch) => {
     await Promise.all(
       items.map((item) => {
         axios
-          .post(`/api/cart/${auth.id}`, item)
+          .post(`/api/cart/${order.id}`, item)
           .then((res) => dispatch(addItem(res.data)));
       })
     );
@@ -74,15 +64,15 @@ export const orderCartItems = (items, auth, history, order) => {
   return async (dispatch) => {
     await Promise.all(
       items.map((item) => {
-        item.status = 'sold';
+        item.status = "sold";
         axios
           .put(`/api/cart/product/${item.inventoryId}`, item)
           .then((res) => dispatch(orderItem(res.data)));
       })
     );
     history.push("/products");
-  }
-}
+  };
+};
 
 // export const changeCart = (item, auth, history) => {
 //   return async (dispatch) => {
