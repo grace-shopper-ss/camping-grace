@@ -57,7 +57,7 @@ class Cart extends React.Component {
                       <strong>{product.name}</strong>
                     </Link>
                   </p>
-                  <p>{cartInventory[item]}</p>
+                  <p>Quantity: {cartInventory[item]}</p>
                 </div>
               );
             })}

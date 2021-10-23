@@ -49,7 +49,6 @@ const ProductList = (props) => {
                     >
                       <Grid container spacing={0} justifyContent="center" alignItems="center">
                         <Grid item lg={6} md={4}>
-                          <Button className="cta" fullWidth variant="cta" endIcon={<ArrowRightAltIcon />}>Add to Cart</Button>
                           <Link to={linkToProduct}>
                             <Button className="cta-alt" fullWidth variant="cta-alt">See Details</Button>
                           </Link>
