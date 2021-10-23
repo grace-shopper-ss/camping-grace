@@ -94,6 +94,17 @@ const theme = createTheme({
             color: '#fdfdf2',
             backgroundColor: '#1C2541 !important'
           }
+        },
+        {
+          props: { variant: 'cartButton' },
+          style: {
+            fontWeight: "bold",            
+            textTransform: 'none',              
+            margin: '1em',
+            color: '#fdfdf2',
+            backgroundColor: '#1C2541 !important',
+            width: '75%'
+          }
         }
       ]
 
