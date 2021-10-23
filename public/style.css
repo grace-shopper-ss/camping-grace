@@ -136,7 +136,8 @@ form div {
 }
 
 #productDetail{
-  background-color:#e4e4e4;  
+  background-color:#e4e4e4;
+  text-align: center;
 }
 
 .productImage{    
@@ -212,4 +213,18 @@ label.MuiInputLabel-root{
 
 .cartItemLink{
   text-decoration:underline;
+}
+
+#productPriceHeading{
+  font-size: 1.1em;
+  font-weight: 800;
+}
+
+.productPriceText{
+  font-size: .9em;
+}
+
+#productId{
+  font-size: .9em;
+  font-weight: 800;
 }
