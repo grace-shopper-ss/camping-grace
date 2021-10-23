@@ -10,34 +10,54 @@ class Cart extends React.Component {
     super(props);
   }
   render() {
-    const { cart, products, auth, history, orderCartItems, completeOrder, createOrder, order } = this.props;
+    const {
+      cart,
+      products,
+      auth,
+      history,
+      orderCartItems,
+      completeOrder,
+      createOrder,
+      order,
+    } = this.props;
     // const myCart = cart || [];
     const checkOut = () => {
       orderCartItems(cart, auth, history);
       completeOrder(order);
       createOrder(auth);
     };
+    const cartProducts = cart.reduce((acc, val) => {
+      if (!acc.includes(val.productId)) {
+        acc.push(val.productId);
+      }
+      return acc;
+    }, []);
+    const cartInventory = cart.reduce((acc, val) => {
+      acc[val.productId] = acc[val.productId] || 0;
+      acc.inventory = acc.inventory || [];
+      acc.inventory.push(val.inventoryId);
+      acc[val.productId]++;
+      return acc;
+    }, {});
+
     return (
       <ThemeProvider theme={theme}>
         <div id="cartContainer">
           <h1>Cart Items:</h1>
           <Paper sx={{ p: ".5em", m: ".5em" }}>
-            {cart.map((item) => {
+            {cartProducts.map((item) => {
               const product = products.find(
-                (product) => item.productId === product.id
+                (product) => item === product.id
               );
               const linkToProduct = `/products/${product.id}`;
               return (
-                <div key={item.id}>
-                  <p key={item.id}>
+                <div className="cartItem" key={item}>
+                  <p key={item}>
                     <Link className="cartItemLink" to={linkToProduct}>
                       <strong>{product.name}</strong>
                     </Link>
                   </p>
-                  <ul>
-                    <li>Price: ${product.price}</li>
-                    <li>Inventory ID: {item.inventoryId}</li>
-                  </ul>
+                  <p>{cartInventory[item]}</p>
                 </div>
               );
             })}
