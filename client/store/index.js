@@ -6,8 +6,9 @@ import auth from "./auth";
 import products from "./products";
 import hero from "./hero";
 import cart from "./cart";
+import order from "./order";
 
-const reducer = combineReducers({ auth, products, hero, cart });
+const reducer = combineReducers({ auth, products, hero, cart, order });
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))
 );
@@ -18,3 +19,4 @@ export * from "./auth";
 export * from "./products";
 export * from "./hero";
 export * from "./cart";
+export * from "./order";

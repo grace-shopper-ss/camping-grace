@@ -12,9 +12,9 @@ router.get("/:order", async (req, res, next) => {
     const cart = await OrderedProduct.findAll({
       where: {
         orderId: order.id,
-      },      
+      },
     });
-    
+
     res.send(cart);
   } catch (err) {
     next(err);
@@ -34,18 +34,6 @@ router.put("/product/:id", async (req, res, next) => {
     const soldProduct = await Inventory.findByPk(req.params.id);
     res.status(200).send(await soldProduct.update(req.body));
   } catch (error) {
-    next(error);
-  }
-});
-
-router.put("/order/:id", async (req, res, next) => {
-  try {
-    const order = await Order.findByPk(req.params.id);
-    
-    console.log(order)
-    order.status = 'complete';
-    res.status(200).send(await order.update(order));
-  } catch(error) {
     next(error);
   }
 });
