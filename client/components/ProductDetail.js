@@ -8,12 +8,15 @@ import {
   Grid,
   Stack,
   ThemeProvider,
+  IconButton,
   Card,
   CardActions,
   CardContent,
   CardMedia,
   Typography,
 } from "@mui/material";
+import RemoveIcon from '@mui/icons-material/Remove';
+import AddIcon from '@mui/icons-material/Add';
 import theme from "./Theme";
 import axios from "axios";
 import { getCart, addToCart, orderCartItems, getHeroText } from "../store";
@@ -73,7 +76,6 @@ class ProductDetail extends React.Component {
       cartItem.productId = productObj.id;
       return cartItem;
     });
-    console.log(added);
     addToCart(added, auth, history);
   };
   orderItem = () => {
@@ -85,11 +87,66 @@ class ProductDetail extends React.Component {
     const { products } = this.props;
     const { id } = this.props.match.params;
     const product = products.find((product) => product.id * 1 === id * 1) || {};
-    console.log('image:', product.imageUrl);
     return (
       <ThemeProvider theme={theme}>
         <div id="productDetail">
-          <Grid
+          <Container maxWidth="lg">
+            <Box
+              mt={2}
+              p={2}
+              sx={{
+                backgroundColor: 'white',
+                borderRadius: '3px',
+                align: 'center'
+              }}
+            >
+              <Grid container justifyContent={'center'}spacing={2}>
+                <Grid item xs={12} md={6}>
+                  <Paper
+                    elevation={6}
+                    component={'div'}
+                  >
+                       <img src={`/${product.imageUrl}`} className="productImage" alt={`Image of ${product.name}`} />
+                  </Paper>
+                </Grid>
+              </Grid>
+              <h1 id="productPriceHeading">{product.name} <span className="productPriceText">${product.price}</span></h1>
+              <p id="productId">
+                Product No. {product.id} <br /> &nbsp;
+              </p>
+              <Grid container spacing={2} justifyContent="center">
+                <Grid item xs={12}>
+                  <IconButton onClick={subtractCount} size="large" aria-label="subtract quantity" color="inherit">
+                    <RemoveIcon />
+                  </IconButton>
+                  {/* <Button className="counterButton" onClick={subtractCount}>
+                    -
+                  </Button> */}
+                  <div className="counterButton">
+                    {count}
+                  </div>
+                  <IconButton onClick={addCount} size="large" aria-label="add quantity" color="inherit">
+                    <AddIcon />
+                  </IconButton>
+                  {/* <Button className="counterButton" onClick={addCount}>
+                    +
+                  </Button> */}
+                </Grid>
+                <Grid item xs={12} lg={6}>
+                  <Button
+                    fullWidth
+                    variant="cartButton"
+                    // color="success"
+                    onClick={addItemToCart}
+                  >
+                    Add to Cart
+                  </Button>
+                </Grid>
+              </Grid>
+            </Box>
+          </Container>
+
+          {/* <Grid
             item
             xs={8}
             md={4}
@@ -101,13 +158,10 @@ class ProductDetail extends React.Component {
               <CardContent 
                 className="cardImageContainer cardImage"
                 style={
-                  // {
-                  //   backgroundImage: `url(` + `${product.imageUrl}` + `)`
-                  // }
                   {
-                    backgroundImage: `url("https://www.patagonia.com/dw/image/v2/BDJB_PRD/on/demandware.static/-/Sites-patagonia-master/default/dwf6e7234e/images/hi-res/25371_KPF.jpg?sw=1200&sh=1200&sfrm=png&q=80&bgcolor=f6f6f6")`
+                    backgroundImage: `url(` + `/${product.imageUrl}` + `)`
                   }
-                }                    
+                }                   
               >
                 Hello World
               </CardContent>
@@ -138,7 +192,7 @@ class ProductDetail extends React.Component {
                 </Grid>
               </CardActions>
             </Card>
-          </Grid>
+          </Grid> */}
         </div>
       </ThemeProvider>
     );

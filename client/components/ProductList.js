@@ -32,7 +32,7 @@ const ProductList = (props) => {
             {products.map((product) => {
               const linkToProduct = `/products/${product.id}`;       
               return (
-                <Grid item xs={10} s={6} md={3} key={ product.id }>
+                <Grid item lg={3} md={4} s={6} xs={8} key={ product.id }>
                   <Card 
                     className="transparent cardContainer"
                     elevation={0}
@@ -48,7 +48,7 @@ const ProductList = (props) => {
                       }                    
                     >
                       <Grid container spacing={0} justifyContent="center" alignItems="center">
-                        <Grid item lg={6} md={4}>
+                        <Grid item lg={6} md={6}>
                           <Button className="cta" fullWidth variant="cta" endIcon={<ArrowRightAltIcon />}>Add to Cart</Button>
                           <Link to={linkToProduct}>
                             <Button className="cta-alt" fullWidth variant="cta-alt">See Details</Button>
