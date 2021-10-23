@@ -11,9 +11,9 @@ class Cart extends React.Component {
   }
   render() {
     const { cart, products, auth, history, orderCartItems, completeOrder, createOrder, order } = this.props;
-    const myCart = cart || [];
+    // const myCart = cart || [];
     const checkOut = () => {
-      orderCartItems(myCart, auth, history);
+      orderCartItems(cart, auth, history);
       completeOrder(order);
       createOrder(auth);
     };
@@ -22,7 +22,7 @@ class Cart extends React.Component {
         <div id="cartContainer">
           <h1>Cart Items:</h1>
           <Paper sx={{ p: ".5em", m: ".5em" }}>
-            {myCart.map((item) => {
+            {cart.map((item) => {
               const product = products.find(
                 (product) => item.productId === product.id
               );

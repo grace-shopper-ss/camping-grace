@@ -48,7 +48,7 @@ export const completeOrder = (order) => {
   order.status = "complete";
   return async (dispatch) => {
     const { data: completed } = await axios.put(
-      `/api/orders/${order.id}`,
+      `/api/orders/${order.userId}`,
       order
     );
     dispatch(completeCurrentOrder(completed));

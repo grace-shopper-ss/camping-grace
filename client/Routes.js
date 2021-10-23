@@ -13,7 +13,8 @@ import { me, getProducts, getCart, setOrder } from "./store";
  */
 class Routes extends Component {
   componentDidMount() {
-    const { loadInitialData, getCart, getProducts, auth, setOrder } = this.props;
+    const { loadInitialData, getCart, getProducts, auth, setOrder } =
+      this.props;
     loadInitialData();
     getProducts();
     getCart(auth.id);
@@ -21,8 +22,10 @@ class Routes extends Component {
   }
   componentDidUpdate(prevProps) {
     if (this.props.auth.id !== prevProps.auth.id) {
-      this.props.getCart(this.props.auth.id);
       this.props.setOrder(this.props.auth.id);
+    }
+    if (this.props.order.id !== prevProps.order.id) {
+      this.props.getCart(this.props.auth.id);
     }
   }
   render() {
@@ -69,6 +72,7 @@ const mapState = (state) => {
     // Otherwise, state.auth will be an empty object, and state.auth.id will be falsey
     isLoggedIn: !!state.auth.id,
     auth: state.auth,
+    order: state.order,
   };
 };
 

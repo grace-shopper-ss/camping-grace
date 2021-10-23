@@ -29,7 +29,6 @@ router.put("/:id", async (req, res, next) => {
     const currentOrder = await Order.findOne({
       where: { userId: req.params.id * 1, status: "pending" },
     });
-
     res.status(200).send(await currentOrder.update(req.body));
   } catch (err) {
     next(err);
