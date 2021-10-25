@@ -49,27 +49,23 @@ export const getCart = (order) => {
 
 export const addToCart = (items, order, history) => {
   return async (dispatch) => {
-    await Promise.all(
-      items.map((item) => {
-        axios
-          .post(`/api/cart/${order.id}`, item)
-          .then((res) => dispatch(addItem(res.data)));
-      })
-    );
+    items.map((item) => {
+      axios
+        .post(`/api/cart/${order.id}`, item)
+        .then((res) => dispatch(addItem(res.data)));
+    });
     history.push("/products");
   };
 };
 
 export const orderCartItems = (items, auth, history, order) => {
   return async (dispatch) => {
-    await Promise.all(
-      items.map((item) => {
-        item.status = "sold";
-        axios
-          .put(`/api/cart/product/${item.inventoryId}`, item)
-          .then((res) => dispatch(orderItem(res.data)));
-      })
-    );
+    items.map((item) => {
+      item.status = "sold";
+      axios
+        .put(`/api/cart/product/${item.inventoryId}`, item)
+        .then((res) => dispatch(orderItem(res.data)));
+    });
     history.push("/products");
   };
 };
