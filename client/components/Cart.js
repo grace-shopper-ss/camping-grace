@@ -50,7 +50,7 @@ class Cart extends React.Component {
       order,
     } = this.props;
     const checkOut = () => {
-      orderCartItems(cart, auth, history);
+      orderCartItems(cart, history);
       completeOrder(order);
       createOrder(auth);
     };
@@ -114,8 +114,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    orderCartItems: (cart, auth, history) =>
-      dispatch(orderCartItems(cart, auth, history)),
+    orderCartItems: (cart, history) =>
+      dispatch(orderCartItems(cart, history)),
     completeOrder: (order) => dispatch(completeOrder(order)),
     createOrder: (auth) => dispatch(createOrder(auth)),
   };
