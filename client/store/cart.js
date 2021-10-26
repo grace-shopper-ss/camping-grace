@@ -1,10 +1,9 @@
-import { ErrorSharp } from "@mui/icons-material";
 import axios from "axios";
 
 const LOAD_CART = "LOAD_CART";
 const ADD_TO_CART = "ADD_TO_CART";
+const RESERVE_CART_ITEM = "RESERVE_CART_ITEM";
 const ORDER_CART_ITEM = "ORDER_CART_ITEM";
-// const UPDATE_CART = "UPDATE_CART";
 
 // actions
 export const loadCart = (cart) => {
@@ -17,6 +16,13 @@ export const loadCart = (cart) => {
 export const addItem = (item) => {
   return {
     type: ADD_TO_CART,
+    item,
+  };
+};
+
+export const reserveItem = (item) => {
+  return {
+    type: RESERVE_CART_ITEM,
     item,
   };
 };
@@ -58,25 +64,29 @@ export const addToCart = (items, order, history) => {
   };
 };
 
-export const orderCartItems = (items, auth, history, order) => {
+export const reserveCartItems = (items, history) => {
   return async (dispatch) => {
     items.map((item) => {
-      item.status = "sold";
+      item.status = "reserved";
       axios
-        .put(`/api/cart/product/${item.inventoryId}`, item)
-        .then((res) => dispatch(orderItem(res.data)));
+        .put(`/api/inventories/${item.inventoryId}`, item)
+        .then((res) => dispatch(reserveItem(res.data)));
     });
     history.push("/products");
   };
 };
 
-// export const changeCart = (item, auth, history) => {
-//   return async (dispatch) => {
-//     const { data: updated } = await axios.put(`/api/cart/${auth.id}/${item.id}`, item);
-//     dispatch(updateCart(updated));
-//     history.push(`/cart/${auth.id}`);
-//   };
-// };
+export const orderCartItems = (items, history) => {
+  return async (dispatch) => {
+    items.map((item) => {
+      item.status = "sold";
+      axios
+        .put(`/api/inventories/${item.inventoryId}`, item)
+        .then((res) => dispatch(orderItem(res.data)));
+    });
+    history.push("/products");
+  };
+};
 
 const initialState = [];
 
@@ -87,12 +97,10 @@ export default (state = initialState, action) => {
       return action.cart;
     case ADD_TO_CART:
       return [...state, action.item];
+    case RESERVE_CART_ITEM:
+      return state;
     case ORDER_CART_ITEM:
       return state;
-    // case UPDATE_CART:
-    //   return state.map((item) =>
-    //     item.id === action.item.id ? action.item : item
-    //   );
     default:
       return state;
   }
