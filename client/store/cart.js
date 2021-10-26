@@ -4,6 +4,7 @@ const LOAD_CART = "LOAD_CART";
 const ADD_TO_CART = "ADD_TO_CART";
 const RESERVE_CART_ITEM = "RESERVE_CART_ITEM";
 const ORDER_CART_ITEM = "ORDER_CART_ITEM";
+const REMOVE_CART_ITEM = "REMOVE_CART_ITEM";
 
 // actions
 export const loadCart = (cart) => {
@@ -34,12 +35,12 @@ export const orderItem = (item) => {
   };
 };
 
-// export const updateCart = (item) => {
-//   return {
-//     type: UPDATE_CART,
-//     item,
-//   };
-// };
+export const removeItem = (item) => {
+  return {
+    type: REMOVE_CART_ITEM,
+    item,
+  };
+};
 
 // thunks
 export const getCart = (order) => {
@@ -88,6 +89,18 @@ export const orderCartItems = (items, history) => {
   };
 };
 
+export const removeCartItems = (items, order, history) => {
+  return async (dispatch) => {
+    items.map((item) => {
+      item.status = "available";
+      axios
+        .put(`/api/inventories/${item.inventoryId}`, item)
+        .then((res) => dispatch(reserveItem(res.data)));
+    });
+    history.push(`/cart/${order.id}`);
+  };
+};
+
 const initialState = [];
 
 // reducer
@@ -101,6 +114,8 @@ export default (state = initialState, action) => {
       return state;
     case ORDER_CART_ITEM:
       return state;
+    case REMOVE_CART_ITEM:
+      return state.filter((item) => item.status !== "available");
     default:
       return state;
   }
