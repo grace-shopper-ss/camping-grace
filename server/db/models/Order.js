@@ -9,6 +9,7 @@ const { INTEGER, ENUM } = Sequelize.DataTypes;
 const Order = db.define("order", {
   userId: {
     type: INTEGER,
+    allowNull: false,
   },
   status: {
     type: ENUM("pending", "complete"),
