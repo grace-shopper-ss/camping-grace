@@ -24,7 +24,6 @@ class Cart extends React.Component {
     this.onChange = this.onChange.bind(this);
   }
   calcTotal() {
-    const { total } = this.state;
     const { cart, products } = this.props;
     const productCount = cart.reduce((acc, val) => {
       acc[val.productId] = acc[val.productId] || 0;
