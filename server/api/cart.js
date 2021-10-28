@@ -17,6 +17,21 @@ router.get("/:order", async (req, res, next) => {
   }
 });
 
+router.get("/:order/:item", async (req, res, next) => {
+  try {
+    const cart = await OrderedProduct.findOne({
+      where: {
+        orderId: req.params.order,
+        inventoryId: req.params.item,
+      },
+    });
+
+    res.send(cart);
+  } catch (err) {
+    next(err);
+  }
+});
+
 router.post("/:order", async (req, res, next) => {
   try {
     res.status(201).send(await OrderedProduct.create(req.body));
@@ -25,10 +40,13 @@ router.post("/:order", async (req, res, next) => {
   }
 });
 
-router.put("/product/:id", async (req, res, next) => {
+router.delete("/:order/:item", async (req, res, next) => {
   try {
-    const soldProduct = await Inventory.findByPk(req.params.id);
-    res.status(200).send(await soldProduct.update(req.body));
+    const product = await OrderedProduct.findOne({
+      where: { orderId: req.params.order * 1, inventoryId: req.params.item },
+    });
+    await product.destroy();
+    res.send(product);
   } catch (error) {
     next(error);
   }

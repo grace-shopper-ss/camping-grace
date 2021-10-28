@@ -9,12 +9,15 @@ const { INTEGER } = Sequelize.DataTypes;
 const OrderedProduct = db.define("orderedproduct", {
   orderId: {
     type: INTEGER,
+    allowNull: false,
   },
   inventoryId: {
-    type: INTEGER
+    type: INTEGER,
+    allowNull: false,
   },
   productId: {
     type: INTEGER,
+    allowNull: false,
   },
 });
 

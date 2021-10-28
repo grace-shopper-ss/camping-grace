@@ -1,10 +1,9 @@
-import { ErrorSharp } from "@mui/icons-material";
 import axios from "axios";
 
 const LOAD_CART = "LOAD_CART";
 const ADD_TO_CART = "ADD_TO_CART";
-const ORDER_CART_ITEM = "ORDER_CART_ITEM";
-// const UPDATE_CART = "UPDATE_CART";
+const UPDATE_INVENTORY = "UPDATE_INVENTORY";
+const REMOVE_CART_ITEM = "REMOVE_CART_ITEM";
 
 // actions
 export const loadCart = (cart) => {
@@ -21,19 +20,19 @@ export const addItem = (item) => {
   };
 };
 
-export const orderItem = (item) => {
+export const updateInventory = (item) => {
   return {
-    type: ORDER_CART_ITEM,
+    type: UPDATE_INVENTORY,
     item,
   };
 };
 
-// export const updateCart = (item) => {
-//   return {
-//     type: UPDATE_CART,
-//     item,
-//   };
-// };
+export const removeItem = (item) => {
+  return {
+    type: REMOVE_CART_ITEM,
+    item,
+  };
+};
 
 // thunks
 export const getCart = (order) => {
@@ -49,38 +48,52 @@ export const getCart = (order) => {
 
 export const addToCart = (items, order, history) => {
   return async (dispatch) => {
-    await Promise.all(
-      items.map((item) => {
-        axios
-          .post(`/api/cart/${order.id}`, item)
-          .then((res) => dispatch(addItem(res.data)));
-      })
-    );
-    history.push("/products");
+    items.map((item) => {
+      axios
+        .post(`/api/cart/${order.id}`, item)
+        .then((res) => dispatch(addItem(res.data)));
+    });
+    history.push(`/cart`);
   };
 };
 
-export const orderCartItems = (items, auth, history, order) => {
+export const reserveCartItems = (items, history) => {
   return async (dispatch) => {
-    await Promise.all(
-      items.map((item) => {
-        item.status = "sold";
-        axios
-          .put(`/api/cart/product/${item.inventoryId}`, item)
-          .then((res) => dispatch(orderItem(res.data)));
-      })
-    );
+    items.map((item) => {
+      item.status = "reserved";
+      axios
+        .put(`/api/inventories/${item.inventoryId}`, item)
+        .then((res) => dispatch(updateInventory(res.data)));
+    });
+  };
+};
+
+export const orderCartItems = (items, history) => {
+  return async (dispatch) => {
+    items.map((item) => {
+      item.status = "sold";
+      axios
+        .put(`/api/inventories/${item.inventoryId}`, item)
+        .then((res) => dispatch(updateInventory(res.data)));
+    });
     history.push("/products");
   };
 };
 
-// export const changeCart = (item, auth, history) => {
-//   return async (dispatch) => {
-//     const { data: updated } = await axios.put(`/api/cart/${auth.id}/${item.id}`, item);
-//     dispatch(updateCart(updated));
-//     history.push(`/cart/${auth.id}`);
-//   };
-// };
+export const removeCartItems = (items, order, history) => {
+  return async (dispatch) => {
+    items.map((item) => {
+      axios
+        .delete(`/api/cart/${order.id}/${item.inventoryId}`, item)
+        .then((res) => dispatch(removeItem(res.data)));
+      item.status = "available";
+      axios
+        .put(`/api/inventories/${item.inventoryId}`, item)
+        .then((res) => dispatch(updateInventory(res.data)));
+    });
+    history.push(`/cart`);
+  };
+};
 
 const initialState = [];
 
@@ -91,12 +104,10 @@ export default (state = initialState, action) => {
       return action.cart;
     case ADD_TO_CART:
       return [...state, action.item];
-    case ORDER_CART_ITEM:
+    case UPDATE_INVENTORY:
       return state;
-    // case UPDATE_CART:
-    //   return state.map((item) =>
-    //     item.id === action.item.id ? action.item : item
-    //   );
+    case REMOVE_CART_ITEM:
+      return state.filter((item) => item.status !== "available");
     default:
       return state;
   }

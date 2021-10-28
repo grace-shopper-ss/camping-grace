@@ -21,4 +21,13 @@ router.get('/:id', async (req, res, next) => {
   }
 });
 
+router.put("/:id", async (req, res, next) => {
+  try {
+    const product = await Inventory.findByPk(req.params.id);
+    res.status(200).send(await product.update(req.body));
+  } catch (error) {
+    next(error);
+  }
+});
+
 module.exports = router;

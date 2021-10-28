@@ -61,7 +61,7 @@ const Navbar = ({ isLoggedIn, handleLogout, cart }) => {
                   <Link to={`/products`}>All Products</Link>
                 </MenuItem>
                 <MenuItem className="menuText" onClick={handleClose}>
-                  My account
+                  <Link to={"/account"}>My account</Link>
                 </MenuItem>
                 <MenuItem className="menuText" onClick={handleLogout}>
                   Logout

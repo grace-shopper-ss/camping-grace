@@ -1,11 +1,11 @@
 const router = require("express").Router();
 const {
-  models: { Order },
+  models: { Order, OrderedProduct },
 } = require("../db");
 
 router.get("/", async (req, res, next) => {
   try {
-    const orders = await Order.findAll();
+    const orders = await Order.findAll({ include: OrderedProduct });
     res.json(orders);
   } catch (err) {
     next(err);

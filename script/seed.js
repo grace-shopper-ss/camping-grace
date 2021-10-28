@@ -17,14 +17,18 @@ async function seed() {
 
   // Creating Users
   const users = await Promise.all([
-    User.create({ username: "cody", password: "123" }),
-    User.create({ username: "murphy", password: "123" }),
+    User.create({ username: "cody", password: "123", type: "member" }),
+    User.create({ username: "murphy", password: "123", type: "member" }),
+    User.create({ username: "Stephen", password: "123", type: "admin" }),
+    User.create({ username: "Spencer", password: "123", type: "admin" }),
   ]);
   
    // Creating Orders
    await Promise.all([
     Order.create({ userId: 1, status: "pending" }),
     Order.create({ userId: 2, status: "pending" }),
+    Order.create({ userId: 3, status: "pending" }),
+    Order.create({ userId: 4, status: "pending" }),
   ]);
 
   // Creating Products

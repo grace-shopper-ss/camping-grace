@@ -15,11 +15,16 @@ import {
   CardMedia,
   Typography,
 } from "@mui/material";
-import RemoveIcon from '@mui/icons-material/Remove';
-import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from "@mui/icons-material/Remove";
+import AddIcon from "@mui/icons-material/Add";
 import theme from "./Theme";
 import axios from "axios";
-import { getCart, addToCart, orderCartItems, getHeroText } from "../store";
+import {
+  addToCart,
+  orderCartItems,
+  getHeroText,
+  reserveCartItems,
+} from "../store";
 
 class ProductDetail extends React.Component {
   constructor(props) {
@@ -65,22 +70,20 @@ class ProductDetail extends React.Component {
     this.setState({ count: count - 1 });
   };
   addItemToCart = () => {
-    const { auth, history, products, addToCart } = this.props;
+    const { order, history, products, addToCart, reserveCartItems } =
+      this.props;
     const { availableProducts, count } = this.state;
     const added = availableProducts.slice(0, count).map((product) => {
       const cartItem = {};
-      // placeholder for current order (which will go on auth obj)
-      cartItem.orderId = auth.id;
-      cartItem.inventoryId = product.id;
       const productObj = products.find((p) => product.productId === p.id);
+      cartItem.orderId = order.id;
+      cartItem.inventoryId = product.id;
       cartItem.productId = productObj.id;
       return cartItem;
     });
-    addToCart(added, auth, history);
+    addToCart(added, order, history);
+    reserveCartItems(added, history);
   };
-  orderItem = () => {
-    const { auth, history, products, orderCartItems } = this.props;
-  }
   render() {
     const { addCount, subtractCount, addItemToCart } = this;
     const { count } = this.state;
@@ -95,37 +98,49 @@ class ProductDetail extends React.Component {
               mt={2}
               p={2}
               sx={{
-                backgroundColor: 'white',
-                borderRadius: '3px',
-                align: 'center'
+                backgroundColor: "white",
+                borderRadius: "3px",
+                align: "center",
               }}
             >
-              <Grid container justifyContent={'center'}spacing={2}>
+              <Grid container justifyContent={"center"} spacing={2}>
                 <Grid item xs={12} md={6}>
-                  <Paper
-                    elevation={6}
-                    component={'div'}
-                  >
-                       <img src={`/${product.imageUrl}`} className="productImage" alt={`Image of ${product.name}`} />
+                  <Paper elevation={6} component={"div"}>
+                    <img
+                      src={`/${product.imageUrl}`}
+                      className="productImage"
+                      alt={`Image of ${product.name}`}
+                    />
                   </Paper>
                 </Grid>
               </Grid>
-              <h1 id="productPriceHeading">{product.name} <span className="productPriceText">${product.price}</span></h1>
+              <h1 id="productPriceHeading">
+                {product.name}{" "}
+                <span className="productPriceText">${product.price}</span>
+              </h1>
               <p id="productId">
                 Product No. {product.id} <br /> &nbsp;
               </p>
               <Grid container spacing={2} justifyContent="center">
                 <Grid item xs={12}>
-                  <IconButton onClick={subtractCount} size="large" aria-label="subtract quantity" color="inherit">
+                  <IconButton
+                    onClick={subtractCount}
+                    size="large"
+                    aria-label="subtract quantity"
+                    color="inherit"
+                  >
                     <RemoveIcon />
                   </IconButton>
                   {/* <Button className="counterButton" onClick={subtractCount}>
                     -
                   </Button> */}
-                  <div className="counterButton">
-                    {count}
-                  </div>
-                  <IconButton onClick={addCount} size="large" aria-label="add quantity" color="inherit">
+                  <div className="counterButton">{count}</div>
+                  <IconButton
+                    onClick={addCount}
+                    size="large"
+                    aria-label="add quantity"
+                    color="inherit"
+                  >
                     <AddIcon />
                   </IconButton>
                   {/* <Button className="counterButton" onClick={addCount}>
@@ -205,6 +220,7 @@ const mapStateToProps = (state) => {
     heroText: state.hero,
     cart: state.cart,
     auth: state.auth,
+    order: state.order,
   };
 };
 
@@ -215,8 +231,9 @@ const mapDispatch = (dispatch) => {
     },
     addToCart: (cart, auth, history) =>
       dispatch(addToCart(cart, auth, history)),
-    orderCartItems: (cart, auth, history) => 
-      dispatch(orderCartItems(cart, auth, history)),
+    reserveCartItems: (cart, history) =>
+      dispatch(reserveCartItems(cart, history)),
+    orderCartItems: (cart, history) => dispatch(orderCartItems(cart, history)),
   };
 };
 
