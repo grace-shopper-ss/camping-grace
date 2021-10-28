@@ -58,7 +58,7 @@ class Cart extends React.Component {
       removeCartItems,
     } = this.props;
     const value = event.target.value;
-    const id = event.target.className;
+    const id = event.target.id;
     const cartItems = cart.filter((product) => product.productId * 1 === id * 1);
     // check whether they are adding products, or removing products from the cart
     const difference = value - cartItems.length;
@@ -145,7 +145,7 @@ class Cart extends React.Component {
                     <label htmlFor={product.name}>Quantity:</label>
                     <select
                       name={product.name}
-                      className={product.id}
+                      id={product.id}
                       value={quantity}
                       onChange={onChange}
                       type="submit"
