@@ -2,7 +2,7 @@ import axios from "axios";
 
 const LOAD_CART = "LOAD_CART";
 const ADD_TO_CART = "ADD_TO_CART";
-const RESERVE_CART_ITEM = "RESERVE_CART_ITEM";
+const UPDATE_INVENTORY = "UPDATE_INVENTORY";
 const ORDER_CART_ITEM = "ORDER_CART_ITEM";
 const REMOVE_CART_ITEM = "REMOVE_CART_ITEM";
 
@@ -21,9 +21,9 @@ export const addItem = (item) => {
   };
 };
 
-export const reserveItem = (item) => {
+export const updateInventory = (item) => {
   return {
-    type: RESERVE_CART_ITEM,
+    type: UPDATE_INVENTORY,
     item,
   };
 };
@@ -61,7 +61,7 @@ export const addToCart = (items, order, history) => {
         .post(`/api/cart/${order.id}`, item)
         .then((res) => dispatch(addItem(res.data)));
     });
-    history.push("/products");
+    history.push(`/cart`);
   };
 };
 
@@ -71,9 +71,8 @@ export const reserveCartItems = (items, history) => {
       item.status = "reserved";
       axios
         .put(`/api/inventories/${item.inventoryId}`, item)
-        .then((res) => dispatch(reserveItem(res.data)));
+        .then((res) => dispatch(updateInventory(res.data)));
     });
-    history.push("/products");
   };
 };
 
@@ -92,12 +91,15 @@ export const orderCartItems = (items, history) => {
 export const removeCartItems = (items, order, history) => {
   return async (dispatch) => {
     items.map((item) => {
+      axios
+        .delete(`/api/cart/${order.id}/${item.inventoryId}`, item)
+        .then((res) => dispatch(removeItem(res.data)));
       item.status = "available";
       axios
         .put(`/api/inventories/${item.inventoryId}`, item)
-        .then((res) => dispatch(reserveItem(res.data)));
+        .then((res) => dispatch(updateInventory(res.data)));
     });
-    history.push(`/cart/${order.id}`);
+    history.push(`/cart`);
   };
 };
 
@@ -110,7 +112,7 @@ export default (state = initialState, action) => {
       return action.cart;
     case ADD_TO_CART:
       return [...state, action.item];
-    case RESERVE_CART_ITEM:
+    case UPDATE_INVENTORY:
       return state;
     case ORDER_CART_ITEM:
       return state;
