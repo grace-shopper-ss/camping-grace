@@ -3,7 +3,6 @@ import axios from "axios";
 const LOAD_CART = "LOAD_CART";
 const ADD_TO_CART = "ADD_TO_CART";
 const UPDATE_INVENTORY = "UPDATE_INVENTORY";
-const ORDER_CART_ITEM = "ORDER_CART_ITEM";
 const REMOVE_CART_ITEM = "REMOVE_CART_ITEM";
 
 // actions
@@ -24,13 +23,6 @@ export const addItem = (item) => {
 export const updateInventory = (item) => {
   return {
     type: UPDATE_INVENTORY,
-    item,
-  };
-};
-
-export const orderItem = (item) => {
-  return {
-    type: ORDER_CART_ITEM,
     item,
   };
 };
@@ -82,7 +74,7 @@ export const orderCartItems = (items, history) => {
       item.status = "sold";
       axios
         .put(`/api/inventories/${item.inventoryId}`, item)
-        .then((res) => dispatch(orderItem(res.data)));
+        .then((res) => dispatch(updateInventory(res.data)));
     });
     history.push("/products");
   };
@@ -113,8 +105,6 @@ export default (state = initialState, action) => {
     case ADD_TO_CART:
       return [...state, action.item];
     case UPDATE_INVENTORY:
-      return state;
-    case ORDER_CART_ITEM:
       return state;
     case REMOVE_CART_ITEM:
       return state.filter((item) => item.status !== "available");

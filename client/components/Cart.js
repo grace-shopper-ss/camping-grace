@@ -60,7 +60,6 @@ class Cart extends React.Component {
     const value = event.target.value;
     const id = event.target.className;
     const cartItems = cart.filter((product) => product.productId * 1 === id * 1);
-    console.log(cartItems)
     // check whether they are adding products, or removing products from the cart
     const difference = value - cartItems.length;
     // if adding, dispatch addToCart
