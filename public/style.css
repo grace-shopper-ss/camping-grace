@@ -100,8 +100,28 @@ form div {
   transition: 75ms ease-out;
 }
 
-#main-heading{
+#main-heading, #shop-heading{
   font-family: 'Vollkorn', serif;
+  cursor: pointer;
+}
+
+#shop-heading{
+  font-size: 1.1em;
+  /* font-family: Helvetica, Arial, sans-serif !important;
+  font-family: 'Vollkorn', serif !important;
+  font-weight: 300;
+  text-transform: uppercase;
+  letter-spacing: 1;
+  margin-top: .1em; */
+
+}
+
+#popOverTest{
+  width: 100vw;
+  margin-left: calc(-50vw + 49%) !important;
+  color: white;
+  padding: 1em;
+  background-color: #60706C;
 }
 
 .menuText{
@@ -114,9 +134,9 @@ form div {
   color:rgb(49, 49, 48) !important;
 }
 
-.cardContainer:hover .cta-alt{  
-  color:rgb(250, 250, 231) !important;
-  text-decoration: underline;
+.cardContainer:hover .cta-alt{
+  background-color:rgb(254, 255, 247);
+  color:rgb(49, 49, 48) !important;
 }
 
 .cardContainer:hover .cardImage{
