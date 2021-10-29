@@ -19,6 +19,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Badge from "@mui/material/Badge";
+import Search from "./Search";
 
 const Navbar = ({ isLoggedIn, handleLogout, cart, products }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -54,6 +55,7 @@ const Navbar = ({ isLoggedIn, handleLogout, cart, products }) => {
       <div>
         <Box sx={{ flexGrow: 1 }}>
           <AppBar position="static" id="nav" elevation={0}>
+              <Search></Search>
             <Toolbar>
               <IconButton
                 id="basic-button"
@@ -129,10 +131,16 @@ const Navbar = ({ isLoggedIn, handleLogout, cart, products }) => {
                 <div id="popOverTest">
                   <Typography sx={{ p: 2, width: "100%", height: "100%" }}>
                     The content of the Popover.
-                    <ul className='productCategories'>
-                      <li><Link to='/products/all'>All</Link></li>
+                    <ul className="productCategories">
+                      <li>
+                        <Link to="/products/all">All</Link>
+                      </li>
                       {categories.map((category, idx) => {
-                        return (<li key={idx}><Link to={`/products/${category}`}>{category}</Link></li>);
+                        return (
+                          <li key={idx}>
+                            <Link to={`/products/${category}`}>{category}</Link>
+                          </li>
+                        );
                       })}
                     </ul>
                   </Typography>
