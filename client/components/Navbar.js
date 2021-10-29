@@ -80,7 +80,7 @@ const Navbar = ({ isLoggedIn, handleLogout, cart, products }) => {
                 }}
               >
                 <MenuItem className="menuText" onClick={handleClose}>
-                  <Link to={`/products`}>All Products</Link>
+                  <Link to={`/products/all`}>All Products</Link>
                 </MenuItem>
                 <MenuItem className="menuText" onClick={handleClose}>
                   <Link to={"/account"}>My account</Link>

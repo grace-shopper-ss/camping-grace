@@ -17,7 +17,7 @@ export const Home = props => {
     <div>      
       <Paper sx={{m: 2, p: 2}}>
         <h1>Welcome, {username}</h1>
-        <Link to={`/products`}>
+        <Link to={`/products/all`}>
           <Button variant="contained">Shop Now</Button>
         </Link>
       </Paper>
