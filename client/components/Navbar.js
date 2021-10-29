@@ -13,20 +13,42 @@ import {
   Menu,
   MenuItem,
   AppBar,
+  Popover,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Badge from "@mui/material/Badge";
 
-const Navbar = ({ isLoggedIn, handleLogout, cart }) => {
+const Navbar = ({ isLoggedIn, handleLogout, cart, products }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorElPop, setAnchorElPop] = React.useState(null);
+
   const open = Boolean(anchorEl);
+  const openPop = Boolean(anchorElPop);
+
+  const popId = openPop ? "simple-popover" : undefined;
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
-    setAnchorEl(null);
+    setAnchorElPop(null);
   };
+
+  const handlePopClick = (event) => {
+    setAnchorElPop(event.currentTarget);
+  };
+
+  const handlePopClose = () => {
+    setAnchorElPop(null);
+  };
+
+  const categories = products.reduce((acc, product) => {
+    if (!acc.includes(product.category)) acc.push(product.category);
+    return acc;
+  }, []);
+
   return (
     <ThemeProvider theme={theme}>
       <div>
@@ -76,6 +98,46 @@ const Navbar = ({ isLoggedIn, handleLogout, cart }) => {
               >
                 <Link to={"/"}>Grace-Camping</Link>
               </Typography>
+              <Typography
+                id="shop-heading"
+                component="div"
+                sx={{ flexGrow: 1 }}
+                aria-describedby={popId}
+                variant="h6"
+                onClick={handlePopClick}
+              >
+                SHOP
+              </Typography>
+              {/* <Button
+                aria-describedby={popId}
+                variant="contained"
+                onClick={handlePopClick}
+                sx={{ flexGrow: 1 }}
+              >
+                Open Popover
+              </Button> */}
+              <Popover
+                id={popId}
+                open={openPop}
+                anchorEl={anchorElPop}
+                onClose={handlePopClose}
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "left",
+                }}
+              >
+                <div id="popOverTest">
+                  <Typography sx={{ p: 2, width: "100%", height: "100%" }}>
+                    The content of the Popover.
+                    <ul className='productCategories'>
+                      <li><Link to='/products/all'>All</Link></li>
+                      {categories.map((category, idx) => {
+                        return (<li key={idx}><Link to={`/products/${category}`}>{category}</Link></li>);
+                      })}
+                    </ul>
+                  </Typography>
+                </div>
+              </Popover>
               <Link to="/cart" sx={{ flexGrow: 2 }}>
                 <IconButton
                   size="large"
@@ -89,9 +151,16 @@ const Navbar = ({ isLoggedIn, handleLogout, cart }) => {
               </Link>
 
               {isLoggedIn ? (
-                <Button onClick={handleLogout} color="inherit">
-                  Logout
-                </Button>
+                <div>
+                  <Link to="/account" sx={{ flexGrow: 2 }}>
+                    <IconButton size="large" aria-label="user" color="inherit">
+                      <AccountCircleIcon />
+                    </IconButton>
+                  </Link>
+                  <Button onClick={handleLogout} color="inherit">
+                    Logout
+                  </Button>
+                </div>
               ) : (
                 <div>
                   <Link to="/signup">
@@ -116,6 +185,7 @@ const mapState = (state) => {
   return {
     isLoggedIn: !!state.auth.id,
     cart: state.cart,
+    products: state.products,
   };
 };
 

@@ -48,7 +48,7 @@ const ProductList = (props) => {
                       }                    
                     >
                       <Grid container spacing={0} justifyContent="center" alignItems="center">
-                        <Grid item lg={6} md={6}>
+                        <Grid item lg={7} md={7}>
 
                           <Link to={linkToProduct}>
                             <Button className="cta-alt" fullWidth variant="cta-alt">See Details</Button>

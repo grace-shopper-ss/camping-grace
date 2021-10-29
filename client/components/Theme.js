@@ -78,10 +78,10 @@ const theme = createTheme({
             fontWeight: "bold",            
             textTransform: 'none',              
             color: 'transparent',
-            marginTop: '3em',
+            marginTop: '45%',
+            borderRadius: '25px',
             '&:focus': {              
               color: 'black',
-              textDecoration: 'underline',
             }
           }
         },
