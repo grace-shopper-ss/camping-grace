@@ -19,7 +19,7 @@ import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
 import theme from "./Theme";
 import axios from "axios";
-import { getCart, addToCart, orderCartItems, getHeroText } from "../store";
+import { getCart, addToCart, orderCartItems, getHeroText, addToGuestCart } from "../store";
 
 class ProductDetail extends React.Component {
   constructor(props) {
@@ -76,13 +76,42 @@ class ProductDetail extends React.Component {
       cartItem.productId = productObj.id;
       return cartItem;
     });
+    // Everything above this can stay the same for both guest and members. We need to now either dispatch
+    //    a thunk if adding to a members cart, as that will require a PUT axios call
+    //    or an action for LocalCart state on store. 
+    // To Do: add ternary check, IF GUEST, dispatch different action to insert 'added' to localCart.
+    
     addToCart(added, auth, history);
+    // addToLocalCart(added, history)
   };
+
+  // Guest clone
+  addGuestCartItems = () => {
+    const { auth, history, products, addToGuestCart } = this.props;
+    const { availableProducts, count } = this.state;
+    const added = availableProducts.slice(0, count).map((product) => {
+      const cartItem = {};
+      // placeholder for current order (which will go on auth obj)
+      cartItem.orderId = 'guest'
+      cartItem.inventoryId = product.id;
+      const productObj = products.find((p) => product.productId === p.id);
+      cartItem.productId = productObj.id;
+      return cartItem;
+    });
+    // Everything above this can stay the same for both guest and members. We need to now either dispatch
+    //    a thunk if adding to a members cart, as that will require a PUT axios call
+    //    or an action for LocalCart state on store. 
+    // To Do: add ternary check, IF GUEST, dispatch different action to insert 'added' to localCart.
+    
+    addToGuestCart(added, history);
+    // addToLocalCart(added, history)
+  };
+
   orderItem = () => {
-    const { auth, history, products, orderCartItems } = this.props;
+    const { auth, history, products, orderCartItems, addToGuestCart } = this.props;
   }
   render() {
-    const { addCount, subtractCount, addItemToCart } = this;
+    const { addCount, subtractCount, addItemToCart, addGuestCartItems } = this;
     const { count } = this.state;
     const { products } = this.props;
     const { id } = this.props.match.params;
@@ -140,6 +169,13 @@ class ProductDetail extends React.Component {
                     onClick={addItemToCart}
                   >
                     Add to Cart
+                  </Button>
+                  <Button 
+                    fullWidth
+                    variant="cartButton"
+                    onClick={addGuestCartItems}
+                  >
+                    Add to Guest Cart
                   </Button>
                 </Grid>
               </Grid>
@@ -204,6 +240,7 @@ const mapStateToProps = (state) => {
     products: state.products,
     heroText: state.hero,
     cart: state.cart,
+    localCart: state.localCart,
     auth: state.auth,
   };
 };
@@ -215,6 +252,8 @@ const mapDispatch = (dispatch) => {
     },
     addToCart: (cart, auth, history) =>
       dispatch(addToCart(cart, auth, history)),
+    addToGuestCart: (cart, history) => 
+      dispatch(addToGuestCart(cart, history)),
     orderCartItems: (cart, auth, history) => 
       dispatch(orderCartItems(cart, auth, history)),
   };

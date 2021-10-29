@@ -4,8 +4,10 @@ import { withRouter, Route, Switch, Redirect } from "react-router-dom";
 import { Login, Signup } from "./components/AuthForm";
 import Home from "./components/Home";
 import Cart from "./components/Cart";
+import LocalCart from "./components/LocalCart";
 import ProductList from "./components/ProductList";
 import ProductDetail from "./components/ProductDetail";
+import Drawer from "./components/Drawer";
 import { me, getProducts, getCart, setOrder } from "./store";
 
 /**
@@ -43,12 +45,14 @@ class Routes extends Component {
               {<Redirect to="/home" />}
             </Route>
             <Route exact path="/cart" component={Cart} />
+            <Route exact path="/localCart" component={LocalCart} />
             <Route exact path="/products" component={ProductList} />
             <Route path="/products/:id" component={ProductDetail} />
           </Switch>
         ) : (
           <Switch>
             <Route exact path="/home" component={Home} />
+            <Route exact path="/cart" component={Cart} />
             <Route exact path="/">
               {<Redirect to="/home" />}
             </Route>

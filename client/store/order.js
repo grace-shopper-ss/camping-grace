@@ -1,4 +1,5 @@
 import axios from "axios";
+import {v4 as uuidv4} from 'uuid';
 
 const SET_CURRENT_ORDER = "SET_CURRENT_ORDER";
 const COMPLETE_CURRENT_ORDER = "COMPLETE_CURRENT_ORDER";
@@ -65,6 +66,18 @@ export const createOrder = (user) => {
     dispatch(createNewOrder(newOrder));
   };
 };
+
+export const submitGuestOrder = (guest) => {
+  let guestUuid = String(uuidv4());
+  const order = {
+    userId: "guest-" + guestUuid,
+    status: "complete",
+  };
+  return async (dispatch) => {
+    const { data: newOrder } = await axios.post("/api/orders", order);
+    dispatch(completeCurrentOrder(newOrder));
+  }
+}
 
 const initialState = [];
 
