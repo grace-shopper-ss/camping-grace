@@ -68,7 +68,7 @@ export const reserveCartItems = (items, history) => {
   };
 };
 
-export const orderCartItems = (items, history) => {
+export const orderCartItems = (items) => {
   return async (dispatch) => {
     items.map((item) => {
       item.status = "sold";
@@ -76,7 +76,6 @@ export const orderCartItems = (items, history) => {
         .put(`/api/inventories/${item.inventoryId}`, item)
         .then((res) => dispatch(updateInventory(res.data)));
     });
-    history.push("/products");
   };
 };
 

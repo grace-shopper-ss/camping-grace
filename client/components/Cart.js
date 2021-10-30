@@ -12,14 +12,7 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import theme from "./Theme";
-import {
-  orderCartItems,
-  completeOrder,
-  createOrder,
-  addToCart,
-  removeCartItems,
-  reserveCartItems,
-} from "../store";
+import { addToCart, removeCartItems, reserveCartItems } from "../store";
 
 class Cart extends React.Component {
   constructor(props) {
@@ -111,11 +104,6 @@ class Cart extends React.Component {
       createOrder,
       order,
     } = this.props;
-    const checkOut = () => {
-      orderCartItems(cart, history);
-      completeOrder(order);
-      createOrder(auth);
-    };
     const cartProducts = cart.reduce((acc, val) => {
       if (!acc.includes(val.productId)) {
         acc.push(val.productId);
@@ -163,7 +151,7 @@ class Cart extends React.Component {
                           alignItems="center"
                         >
                           <Grid item xs={12}>
-                            <div key={item} sx={{textAlign: 'center'}}>
+                            <div key={item} sx={{ textAlign: "center" }}>
                               <h2>
                                 <Link
                                   className="cartItemLink"
@@ -174,8 +162,9 @@ class Cart extends React.Component {
                                   <br />
                                 </Link>
                               </h2>
-                              <h3 style={{textAlign:'center'}}>
-                                ${product.price.toLocaleString("en-US", {
+                              <h3 style={{ textAlign: "center" }}>
+                                $
+                                {product.price.toLocaleString("en-US", {
                                   style: "currency",
                                   currency: "USD",
                                 })}
@@ -249,9 +238,9 @@ class Cart extends React.Component {
                       currency: "USD",
                     })}
                   </div>
-                  <Button variant={"auth-button"} onClick={checkOut}>
-                    Check Out Now
-                  </Button>
+                  <Link to="/checkout">
+                    <Button variant={"auth-button"}>Check Out Now</Button>
+                  </Link>
                 </div>
               </Grid>
             </Grid>
@@ -273,9 +262,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    orderCartItems: (cart, history) => dispatch(orderCartItems(cart, history)),
-    completeOrder: (order) => dispatch(completeOrder(order)),
-    createOrder: (auth) => dispatch(createOrder(auth)),
     addToCart: (items, order, history) =>
       dispatch(addToCart(items, order, history)),
     removeCartItems: (items, order, history) =>
