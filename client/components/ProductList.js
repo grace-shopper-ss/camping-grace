@@ -51,7 +51,7 @@ const ProductList = (props) => {
               alignItems="center"
             >
               {displayedProducts.map((product) => {
-                const linkToProduct = `/products/detail/${product.id}`;
+                const linkToProduct = `/products/${product.category}/${product.id}`;
                 return (
                   <Grid item lg={3} md={4} s={6} xs={8} key={product.id}>
                     <Card

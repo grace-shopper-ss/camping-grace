@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import Button from '@mui/material/Button';
 import { Box, Paper } from '@mui/material';
 import { getHeroText } from "../store";
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 
 /**
  * COMPONENT
@@ -15,10 +16,16 @@ export const Home = props => {
   },[]);
   return (
     <div>      
-      <Paper sx={{m: 2, p: 2}}>
+      <Paper sx={{m: 2, p: 2, mt: 25}}>
         <h1>Welcome, {username}</h1>
         <Link to={`/products/all`}>
-          <Button variant="contained">Shop Now</Button>
+          <Button 
+            variant="auth-button"
+            id="homeButton"
+            type="submit"
+            endIcon={<div id='iconGroup'><KeyboardArrowRightIcon id="authIcon"/> <KeyboardArrowRightIcon id="authIcon2"/></div>}
+            fullWidth
+          >Shop Now</Button>
         </Link>
       </Paper>
       

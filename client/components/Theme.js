@@ -54,6 +54,42 @@ const theme = createTheme({
         }
       }
     },
+    MuiListItem: {
+      styleOverrides: {
+        root: {
+          justifyContent: 'center',
+        }
+      }
+    },
+    MuiListItemText: {
+      styleOverrides: {
+        root: {
+          fontWeight: "200",
+          fontSize: "1em",
+          textAlign: 'center',
+          justifyContent: 'center',        }
+      },
+      variants: [
+        {
+          props: { variant: 'menuSubItem' },
+          style: {
+            "& span": {
+              fontWeight: "200",
+              fontSize: '1em',
+              textAlign: 'center',
+          }
+          }
+        }
+      ]
+    },
+    MuiListItemButton: {
+      styleOverrides: {
+        root: {
+          textAlign: 'center',
+          justifyConent: 'center',
+        }
+      }
+    },
     MuiButton: {
       styleOverrides: {
         root: {
@@ -101,6 +137,18 @@ const theme = createTheme({
             fontWeight: "bold",            
             textTransform: 'none',              
             margin: '1em',
+            color: '#fdfdf2',
+            backgroundColor: '#1C2541 !important',
+            width: '75%'
+          }
+        },
+        {
+          props: { variant: 'menuList' },
+          style: {
+            fontWeight: '100',            
+            textTransform: 'none',              
+            paddingTop: '0',
+            paddingBottom: '0',
             color: '#fdfdf2',
             backgroundColor: '#1C2541 !important',
             width: '75%'
