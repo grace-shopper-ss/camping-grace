@@ -1,23 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 import theme from "./Theme";
 import { ThemeProvider, Autocomplete, TextField } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 
-const Search = ({ products }) => {
+const Search = ({ products, history }) => {
   const [value, setValue] = useState(null);
   const [inputValue, setInputValue] = useState("");
   const [options, setOptions] = useState([]);
 
   useEffect(() => {
-    const options = products.map((option) => {
-      const firstLetter = option.name[0].toUpperCase();
-      return {
-        firstLetter: /[0-9]/.test(firstLetter) ? "0-9" : firstLetter,
-        ...option,
-      };
-    });
-    setOptions(options);
+    setOptions(products);
   }, [products]);
 
   return (
@@ -27,9 +21,8 @@ const Search = ({ products }) => {
         <Autocomplete
           value={value}
           onChange={(event, newValue) => {
-            const product = products.find((p) => p.name === newValue);
             setValue(newValue);
-            window.location.href = `/products/${product.category}/${product.id}`;
+            window.location.href = `/products/${newValue.category}/${newValue.id}`;
           }}
           inputValue={inputValue}
           onInputChange={(event, newInputValue) => {
@@ -58,7 +51,6 @@ const Search = ({ products }) => {
 const mapState = (state) => {
   return {
     products: state.products,
-    history: state.history,
   };
 };
 
