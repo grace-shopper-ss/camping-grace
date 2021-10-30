@@ -35,6 +35,7 @@
     "morgan": "^1.9.1",
     "pg": "^8.5.1",
     "sequelize": "^6.3.5",
+    "stripe": "^8.184.0",
     "xlsx": "^0.17.2"
   },
   "devDependencies": {

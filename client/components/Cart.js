@@ -148,7 +148,7 @@ class Cart extends React.Component {
                   );
                   const quantity = cartInventory[item];
                   const totalProductSpend = quantity * product.price;
-                  const linkToProduct = `/products/${product.id}`;
+                  const linkToProduct = `/products/${product.category}/${product.id}`;
                   return (
                     <div className="cartItem" key={item}>
                       <Card
@@ -163,23 +163,24 @@ class Cart extends React.Component {
                           alignItems="center"
                         >
                           <Grid item xs={12}>
-                            <p key={item}>
-                              <span>
+                            <div key={item} sx={{textAlign: 'center'}}>
+                              <h2>
                                 <Link
                                   className="cartItemLink"
                                   to={linkToProduct}
                                 >
-                                {/* stephen pls fix */}
-                                  <h2> 
-                                    <strong>{product.name}</strong>
-                                  </h2>
+                                  {/* stephen pls fix */}
+                                  <strong>{product.name}</strong>
+                                  <br />
                                 </Link>
-                                {product.price.toLocaleString("en-US", {
+                              </h2>
+                              <h3 style={{textAlign:'center'}}>
+                                ${product.price.toLocaleString("en-US", {
                                   style: "currency",
                                   currency: "USD",
                                 })}
-                              </span>
-                            </p>
+                              </h3>
+                            </div>
                           </Grid>
                           <Grid
                             container

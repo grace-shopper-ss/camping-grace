@@ -17,6 +17,7 @@ import {
 } from "@mui/material";
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
+import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 import theme from "./Theme";
 import axios from "axios";
 import {
@@ -32,18 +33,21 @@ class ProductDetail extends React.Component {
     this.state = {
       availableProducts: [],
       count: 0,
+      product: null,
     };
     this.addCount = this.addCount.bind(this);
     this.subtractCount = this.subtractCount.bind(this);
     this.addItemToCart = this.addItemToCart.bind(this);
   }
   async componentDidMount() {
+    const { products } = this.props;
     const { id } = this.props.match.params;
     const { data: inventory } = await axios.get("/api/inventories");
     const avail = inventory.filter(
       (prod) => prod.productId === id * 1 && prod.status === "available"
     );
-    this.setState({ availableProducts: avail, count: 0 });
+    const product = products.find((p) => p.id * 1 === id * 1);
+    this.setState({ availableProducts: avail, count: 0, product });
   }
   async componentDidUpdate(prevProps) {
     const { id } = this.props.match.params;
@@ -51,6 +55,7 @@ class ProductDetail extends React.Component {
       const { loadHeroText, products } = this.props;
       const product = products.find((p) => p.id * 1 === id * 1);
       loadHeroText(product.category.toUpperCase());
+      this.setState({ product });
     }
   }
   addCount = () => {
@@ -86,131 +91,88 @@ class ProductDetail extends React.Component {
   };
   render() {
     const { addCount, subtractCount, addItemToCart } = this;
-    const { count } = this.state;
     const { products } = this.props;
+    const { count, product } = this.state;
     const { id } = this.props.match.params;
-    const product = products.find((product) => product.id * 1 === id * 1) || {};
-    return (
-      <ThemeProvider theme={theme}>
-        <div id="productDetail">
-          <Container maxWidth="lg">
-            <Box
-              mt={2}
-              p={2}
-              sx={{
-                backgroundColor: "white",
-                borderRadius: "3px",
-                align: "center",
-              }}
-            >
-              <Grid container justifyContent={"center"} spacing={2}>
-                <Grid item xs={12} md={6}>
-                  <Paper elevation={6} component={"div"}>
-                    <img
-                      src={`/${product.imageUrl}`}
-                      className="productImage"
-                      alt={`Image of ${product.name}`}
-                    />
-                  </Paper>
-                </Grid>
-              </Grid>
-              <h1 id="productPriceHeading">
-                {product.name}{" "}
-                <span className="productPriceText">${product.price}</span>
-              </h1>
-              <p id="productId">
-                Product No. {product.id} <br /> &nbsp;
-              </p>
-              <Grid container spacing={2} justifyContent="center">
-                <Grid item xs={12}>
-                  <IconButton
-                    onClick={subtractCount}
-                    size="large"
-                    aria-label="subtract quantity"
-                    color="inherit"
-                  >
-                    <RemoveIcon />
-                  </IconButton>
-                  {/* <Button className="counterButton" onClick={subtractCount}>
-                    -
-                  </Button> */}
-                  <div className="counterButton">{count}</div>
-                  <IconButton
-                    onClick={addCount}
-                    size="large"
-                    aria-label="add quantity"
-                    color="inherit"
-                  >
-                    <AddIcon />
-                  </IconButton>
-                  {/* <Button className="counterButton" onClick={addCount}>
-                    +
-                  </Button> */}
-                </Grid>
-                <Grid item xs={12} lg={6}>
-                  <Button
-                    fullWidth
-                    variant="cartButton"
-                    // color="success"
-                    onClick={addItemToCart}
-                  >
-                    Add to Cart
-                  </Button>
-                </Grid>
-              </Grid>
-            </Box>
-          </Container>
 
-          {/* <Grid
-            item
-            xs={8}
-            md={4}
-            s={5}
-            key={product.id}
-            justifyContent="center"
-          >
-            <Card sx={{ maxWidth: 345 }}>
-              <CardContent 
-                className="cardImageContainer cardImage"
-                style={
-                  {
-                    backgroundImage: `url(` + `/${product.imageUrl}` + `)`
-                  }
-                }                   
+    if (product) {
+      return (
+        <ThemeProvider theme={theme}>
+          <div id="productDetail">
+            <Container maxWidth="lg">
+              <Box
+                mt={2}
+                p={2}
+                sx={{
+                  backgroundColor: "white",
+                  borderRadius: "3px",
+                  align: "center",
+                }}
               >
-                Hello World
-              </CardContent>
-              <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
-                  {product.name}
-                </Typography>
-              </CardContent>
-              <CardActions>
+                <Grid container justifyContent={"center"} spacing={2}>
+                  <Grid item xs={12} md={6}>
+                    <Paper elevation={6} component={"div"}>
+                      <img
+                        src={`/${product.imageUrl}`}
+                        className="productImage"
+                        alt={`Image of ${product.name}`}
+                      />
+                    </Paper>
+                  </Grid>
+                </Grid>
+                <h1 id="productPriceHeading">
+                  {product.name} <br />
+                  <LocalOfferIcon />
+                  <span className="productPriceText">
+                    $
+                    {product.price.toLocaleString("en-US", {
+                      style: "currency",
+                      currency: "USD",
+                    })}
+                  </span>
+                </h1>
                 <Grid container spacing={2} justifyContent="center">
-                  <Button className="counterButton" onClick={subtractCount}>
-                    -
-                  </Button>
-                  <div className="counterButton">{count}</div>
-                  <Button className="counterButton" onClick={addCount}>
-                    +
-                  </Button>
+                  <Grid item xs={12}>
+                    <IconButton
+                      onClick={subtractCount}
+                      size="large"
+                      aria-label="subtract quantity"
+                      color="inherit"
+                    >
+                      <RemoveIcon />
+                    </IconButton>
+                    <div className="counterButton">{count}</div>
+                    <IconButton
+                      onClick={addCount}
+                      size="large"
+                      aria-label="add quantity"
+                      color="inherit"
+                    >
+                      <AddIcon />
+                    </IconButton>
+                  </Grid>
                   <Grid item xs={12} lg={6}>
                     <Button
                       fullWidth
-                      variant="contained"
-                      color="success"
+                      variant="cartButton"
+                      // color="success"
                       onClick={addItemToCart}
                     >
                       Add to Cart
                     </Button>
                   </Grid>
                 </Grid>
-              </CardActions>
-            </Card>
-          </Grid> */}
-        </div>
-      </ThemeProvider>
-    );
+              </Box>
+            </Container>
+          </div>
+        </ThemeProvider>
+      );
+    }
+    else {
+      return(
+        <h1>Loading...</h1>
+      )
+    }
   }
 }
 

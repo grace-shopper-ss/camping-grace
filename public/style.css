@@ -347,3 +347,11 @@ label.MuiInputLabel-root{
 label.MuiInputLabel-root{
   padding: 0;
 }
+
+.cartHeading2{
+  font-size: 1.5em;
+}
+
+#checkoutContainer{
+  padding: 2em;
+}
