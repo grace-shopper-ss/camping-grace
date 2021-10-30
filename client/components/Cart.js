@@ -165,10 +165,19 @@ class Cart extends React.Component {
                           <Grid item xs={12}>
                             <p key={item}>
                               <span>
-                                <Link className="cartItemLink" to={linkToProduct}>
-                                  <h2><strong>{product.name}</strong></h2>
+                                <Link
+                                  className="cartItemLink"
+                                  to={linkToProduct}
+                                >
+                                {/* stephen pls fix */}
+                                  <h2> 
+                                    <strong>{product.name}</strong>
+                                  </h2>
                                 </Link>
-                                ${product.price}
+                                {product.price.toLocaleString("en-US", {
+                                  style: "currency",
+                                  currency: "USD",
+                                })}
                               </span>
                             </p>
                           </Grid>
@@ -218,7 +227,11 @@ class Cart extends React.Component {
                             </Grid>
                           </Grid>
                           <Grid item md={12}>
-                            Total cost: ${totalProductSpend}
+                            Total cost:
+                            {totalProductSpend.toLocaleString("en-US", {
+                              style: "currency",
+                              currency: "USD",
+                            })}
                           </Grid>
                         </Grid>
                       </Card>
@@ -228,7 +241,13 @@ class Cart extends React.Component {
               </Grid>
               <Grid item md={3} sm={12}>
                 <div className="cartCheckout">
-                  <div>Total: ${total}</div>
+                  <div>
+                    Total:
+                    {total.toLocaleString("en-US", {
+                      style: "currency",
+                      currency: "USD",
+                    })}
+                  </div>
                   <Button variant={"auth-button"} onClick={checkOut}>
                     Check Out Now
                   </Button>
