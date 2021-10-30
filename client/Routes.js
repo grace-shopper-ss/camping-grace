@@ -7,6 +7,7 @@ import Account from "./components/Account";
 import Cart from "./components/Cart";
 import ProductList from "./components/ProductList";
 import ProductDetail from "./components/ProductDetail";
+import Checkout from "./components/Checkout";
 import { me, getProducts, getCart, setOrder } from "./store";
 
 /**
@@ -47,6 +48,7 @@ class Routes extends Component {
             <Route exact path="/account" component={Account} />
             <Route exact path="/products/:category" component={ProductList} />
             <Route path="/products/:category/:id" component={ProductDetail} />
+            <Route path="/checkout" component={Checkout} />
           </Switch>
         ) : (
           <Switch>
