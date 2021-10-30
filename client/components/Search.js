@@ -5,7 +5,7 @@ import theme from "./Theme";
 import { ThemeProvider, Autocomplete, TextField } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 
-const Search = ({ products, history }) => {
+const Search = ({ products, history, status }) => {
   const [value, setValue] = useState(null);
   const [inputValue, setInputValue] = useState("");
   const [options, setOptions] = useState([]);
@@ -40,7 +40,7 @@ const Search = ({ products, history }) => {
           getOptionLabel={(option) => option.name}
           sx={{ width: 200 }}
           renderInput={(params) => (
-            <TextField {...params} label={<SearchIcon size="large" color="inherit" sx={{m:'-1em 2 2 2', p:'0'}}/>} className="search-options" />
+            <TextField {...params} label={<SearchIcon className={`${status}`} size="large" color="inherit" sx={{m:'-1em 2 2 2', p:'0'}}/>} className="search-options" />
           )}
         />
       </div>

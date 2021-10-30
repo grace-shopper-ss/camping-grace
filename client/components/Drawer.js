@@ -213,7 +213,7 @@ const Drawer = ({ isLoggedIn, handleLogout, cart, products }) => {
                   </React.Fragment>
                 ))}
               </div>
-              <Search sx={{ flexGrow: 2 }}></Search>
+              <Search status={navClass} sx={{ flexGrow: 2 }}></Search>
               <Link to="/cart" sx={{ flexGrow: 2 }}>
                 <IconButton
                   size="large"
