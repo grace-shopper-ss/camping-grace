@@ -49,6 +49,28 @@ form div {
   width: 100%;
 }
 
+
+#landing{
+  background: transparent;
+  /* background-position: wrap;
+  background-size: cover;
+  background-color: rgba(114, 114, 114, 0.596);
+  background-blend-mode: multiply;
+  min-height: 300px;
+  max-height: 1000px;
+  width: 100%; */
+}
+
+#landing-body{
+  background-image: url("https://images.pexels.com/photos/2421436/pexels-photo-2421436.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
+  background-size: cover;
+  background-position: center;
+  background-color: grey;
+  background-blend-mode: multiply;
+  height: 100vh;
+
+}
+
 #hero h1{
   padding-top: 7em;
   color:rgb(255, 254, 233);
@@ -90,15 +112,34 @@ form div {
   background-color: transparent;
   transition: 75ms ease-in;
   color: #f5f3e4;
+  /* color: #444742; */
   padding: 1em 0 1em 0;
 }
 
-#nav:hover{
+.active, .active > *{
   /* background-color: #173836; */
+  background-color: #fefff6;
+  color:rgb(49, 49, 48) !important;
+  transition: 75ms ease-out;
+}
+#nav:hover {
+  /* background-color: #173836; */
+  background-color: #fefff6;
+  color:rgb(49, 49, 48) !important;
+  transition: 75ms ease-out;
+}
+/* #nav.active{
+  
   background-color: #fefff6;
   color:rgb(49, 49, 48);
   transition: 75ms ease-out;
-}
+} */
+
+/* #nav{
+  background-color: #fefff6;
+  color:rgb(49, 49, 48);
+  transition: 75ms ease-out;
+} */
 
 #main-heading, #shop-heading{
   font-family: 'Vollkorn', serif;
@@ -198,6 +239,17 @@ label.MuiInputLabel-root{
   background-color: #076B50;
 }
 
+#homeButton{
+  /* width: 25%; */
+  margin-right: .5em;
+  background-color: #1C2541;
+  color: #fdfdf2;
+}
+
+#homeButton:focus, #homeButton:hover{
+  background-color: #076B50;
+}
+
 #authIcon{
   color: #66676b;
   transition: 250ms ease;
@@ -247,4 +299,43 @@ label.MuiInputLabel-root{
 #productId{
   font-size: .9em;
   font-weight: 800;
+}
+
+.menuListItem {
+  font-weight: 100 !important;
+}
+
+.menuHeading{
+  margin-top: .2em;
+  margin-bottom: 0;
+}
+
+.cartItemPic {
+  border-radius: 50%;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -o-border-radius: 50%;
+  width: 85%;
+}
+
+.productQuantitySelector{
+  margin-left: 1em;
+  width: 100%;
+}
+.productQuantitySelector select{
+  padding: 1em;
+  border: 1px solid lightgrey;
+  border-radius: 5px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  display: block; 
+}
+
+.cartCheckout, .cartCheckout > div {
+  text-align: center;
+}
+
+.cartCheckout {
+  margin-right: 1em;
 }

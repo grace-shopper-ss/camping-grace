@@ -1,7 +1,15 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { Button, ThemeProvider, Paper } from "@mui/material";
+import {
+  Button,
+  ThemeProvider,
+  Paper,
+  Grid,
+  Card,
+  CardActions,
+  CardContent,
+} from "@mui/material";
 import axios from "axios";
 import theme from "./Theme";
 import {
@@ -47,7 +55,7 @@ class Cart extends React.Component {
     if (this.props.cart.length !== prevProps.cart.length) this.calcTotal();
   }
   async onChange(event) {
-    event.persist()
+    event.persist();
     const {
       cart,
       order,
@@ -59,7 +67,9 @@ class Cart extends React.Component {
     } = this.props;
     const value = event.target.value;
     const id = event.target.id;
-    const cartItems = cart.filter((product) => product.productId * 1 === id * 1);
+    const cartItems = cart.filter(
+      (product) => product.productId * 1 === id * 1
+    );
     // check whether they are adding products, or removing products from the cart
     const difference = value - cartItems.length;
     // if adding, dispatch addToCart
@@ -125,51 +135,106 @@ class Cart extends React.Component {
         <div id="cartContainer">
           <h1>Cart Items:</h1>
           <Paper sx={{ p: ".5em", m: ".5em" }}>
-            {cartProducts.map((item) => {
-              const product = products.find((product) => item === product.id);
-              const quantity = cartInventory[item];
-              const totalProductSpend = quantity * product.price;
-              const linkToProduct = `/products/${product.id}`;
-              return (
-                <div className="cartItem" key={item}>
-                  <p key={item}>
-                    <Link className="cartItemLink" to={linkToProduct}>
-                      <strong>{product.name}</strong>
-                    </Link>
-                    , ${product.price}
-                  </p>
-                  <form
-                    className="productQuantitySelector"
-                    onSubmit={handleSubmit}
-                  >
-                    <label htmlFor={product.name}>Quantity:</label>
-                    <select
-                      name={product.name}
-                      id={product.id}
-                      value={quantity}
-                      onChange={onChange}
-                      type="submit"
-                    >
-                      <option value="0">0 (Remove)</option>
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                      <option value="4">4</option>
-                      <option value="5">5</option>
-                      <option value="6">6</option>
-                      <option value="7">7</option>
-                      <option value="8">8</option>
-                      <option value="9">9</option>
-                    </select>
-                    <br /> Total cost: ${totalProductSpend}
-                  </form>
+            <Grid
+              container
+              spacing={2}
+              justifyContent="center"
+              alignItems="center"
+            >
+              <Grid item md={9} sm={12}>
+                {cartProducts.map((item) => {
+                  const product = products.find(
+                    (product) => item === product.id
+                  );
+                  const quantity = cartInventory[item];
+                  const totalProductSpend = quantity * product.price;
+                  const linkToProduct = `/products/${product.id}`;
+                  return (
+                    <div className="cartItem" key={item}>
+                      <Card
+                        elevation={3}
+                        sx={{ width: "95%", p: ".5em", m: ".5em" }}
+                      >
+                        <Grid
+                          container
+                          spacing={2}
+                          justifyContent="center"
+                          direction="column"
+                          alignItems="center"
+                        >
+                          <Grid item xs={12}>
+                            <p key={item}>
+                              <span>
+                                <Link className="cartItemLink" to={linkToProduct}>
+                                  <h2><strong>{product.name}</strong></h2>
+                                </Link>
+                                ${product.price}
+                              </span>
+                            </p>
+                          </Grid>
+                          <Grid
+                            container
+                            spacing={2}
+                            justifyContent="center"
+                            alignItems="center"
+                          >
+                            <Grid item lg={3} md={5} s={12} sm={12}>
+                              <CardContent sx={{ textAlign: "center" }}>
+                                <img
+                                  className="cartItemPic"
+                                  src={`/${product.imageUrl}`}
+                                />
+                              </CardContent>
+                            </Grid>
+                            <Grid item lg={9} md={12} s={12} sm={12}>
+                              <CardActions>
+                                <form
+                                  className="productQuantitySelector"
+                                  onSubmit={handleSubmit}
+                                >
+                                  <label htmlFor={product.name}>
+                                    Quantity:
+                                  </label>
+                                  <select
+                                    name={product.name}
+                                    id={product.id}
+                                    value={quantity}
+                                    onChange={onChange}
+                                    type="submit"
+                                  >
+                                    <option value="0">0 (Remove)</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                  </select>
+                                </form>
+                              </CardActions>
+                            </Grid>
+                          </Grid>
+                          <Grid item md={12}>
+                            Total cost: ${totalProductSpend}
+                          </Grid>
+                        </Grid>
+                      </Card>
+                    </div>
+                  );
+                })}
+              </Grid>
+              <Grid item md={3} sm={12}>
+                <div className="cartCheckout">
+                  <div>Total: ${total}</div>
+                  <Button variant={"auth-button"} onClick={checkOut}>
+                    Check Out Now
+                  </Button>
                 </div>
-              );
-            })}
-            <div>Total: ${total}</div>
-            <Button variant={"auth-button"} onClick={checkOut}>
-              Check Out Now
-            </Button>
+              </Grid>
+            </Grid>
           </Paper>
         </div>
       </ThemeProvider>
