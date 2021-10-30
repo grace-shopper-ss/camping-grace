@@ -339,3 +339,11 @@ label.MuiInputLabel-root{
 .cartCheckout {
   margin-right: 1em;
 }
+
+#search{
+  border: 0px;
+}
+
+label.MuiInputLabel-root{
+  padding: 0;
+}

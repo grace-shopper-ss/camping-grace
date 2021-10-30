@@ -17,7 +17,7 @@ const Search = ({ products, history }) => {
   return (
     <ThemeProvider theme={theme}>
       <div className="search" style={{ display: "flex" }}>
-        <SearchIcon size="large" color="inherit" />
+        
         <Autocomplete
           value={value}
           onChange={(event, newValue) => {
@@ -40,7 +40,7 @@ const Search = ({ products, history }) => {
           getOptionLabel={(option) => option.name}
           sx={{ width: 200 }}
           renderInput={(params) => (
-            <TextField {...params} label="" className="search-options" />
+            <TextField {...params} label={<SearchIcon size="large" color="inherit" sx={{m:'-1em 2 2 2', p:'0'}}/>} className="search-options" />
           )}
         />
       </div>

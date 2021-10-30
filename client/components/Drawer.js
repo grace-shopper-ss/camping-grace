@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { logout } from "../store";
 import theme from "./Theme";
+import Search from "./Search";
 import MenuIcon from "@mui/icons-material/Menu";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
@@ -212,6 +213,7 @@ const Drawer = ({ isLoggedIn, handleLogout, cart, products }) => {
                   </React.Fragment>
                 ))}
               </div>
+              <Search sx={{ flexGrow: 2 }}></Search>
               <Link to="/cart" sx={{ flexGrow: 2 }}>
                 <IconButton
                   size="large"
